@@ -1,0 +1,225 @@
+<div>
+    <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-800">Gestion des Élèves</h1>
+            <p class="text-sm text-gray-500 mt-1">Gérez tous les élèves inscrits dans votre
+                établissement
+            </p>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="https://readdy.ai/home/459dcc36-2d90-46c1-b16a-e8f21dd5c17b/99744ecc-58a5-40da-bbcc-c13e84806c36"
+                data-readdy="true"
+                class="px-4 py-2 bg-primary text-white rounded-button text-sm font-medium hover:bg-primary/90 flex items-center whitespace-nowrap">
+                <div class="w-4 h-4 flex items-center justify-center mr-2">
+                    <i class="ri-user-add-line"></i>
+                </div>
+                <span>Ajouter un élève</span>
+            </a>
+            <button id="export-btn"
+                class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-button text-sm font-medium hover:bg-gray-50 flex items-center whitespace-nowrap">
+                <div class="w-4 h-4 flex items-center justify-center mr-2">
+                    <i class="ri-download-line"></i>
+                </div>
+                <span>Exporter</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Search and Filter Bar -->
+    <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+        <div class="flex flex-col md:flex-row gap-4">
+            <!-- Search Bar -->
+            <div class="relative flex-1">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <div class="w-5 h-5 flex items-center justify-center text-gray-400">
+                        <i class="ri-search-line"></i>
+                    </div>
+                </div>
+                <input type="text" id="search-input" placeholder="Rechercher un élève par nom, prénom ou classe..."
+                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary/20 focus:outline-none">
+            </div>
+
+            <!-- Quick Filters -->
+            <div class="flex items-center gap-2">
+                <div class="px-1 py-1 bg-gray-100 rounded-full flex items-center">
+                    <button class="px-3 py-1 rounded-full text-sm font-medium bg-primary text-white">Tous</button>
+                    <button
+                        class="px-3 py-1 rounded-full text-sm font-medium text-gray-700 hover:bg-gray-200">Primaire</button>
+                    <button
+                        class="px-3 py-1 rounded-full text-sm font-medium text-gray-700 hover:bg-gray-200">Collège</button>
+
+                </div>
+                <button id="advanced-filter-btn"
+                    class="w-10 h-10 flex items-center justify-center text-gray-500 hover:bg-gray-100 rounded-full">
+                    <i class="ri-filter-3-line"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Advanced Filters (Hidden by default) -->
+        <div id="advanced-filters" class="mt-4 pt-4 border-t hidden">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label for="filter-classe" class="block text-sm font-medium text-gray-700 mb-1">Classe</label>
+                    <select id="filter-classe"
+                        class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary/20 focus:outline-none pr-8">
+                        <option value="">Toutes les classes</option>
+                        <option value="cp">CP</option>
+                        <option value="ce1">CE1</option>
+                        <option value="ce2">CE2</option>
+                        <!--Les classes seront ajouter automatiquement-->
+                    </select>
+                </div>
+                <div>
+                    <label for="filter-statut" class="block text-sm font-medium text-gray-700 mb-1">Statut</label>
+                    <select id="filter-statut"
+                        class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary/20 focus:outline-none pr-8">
+                        <option value="">Sexe</option>
+                        <option value="actif">M</option>
+                        <option value="inactif">F</option>
+
+                    </select>
+                </div>
+                <div>
+                    <label for="filter-date" class="block text-sm font-medium text-gray-700 mb-1">Date
+                        d'inscription</label>
+                    <div class="flex items-center gap-2">
+                        <input type="date" id="filter-date-start"
+                            class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                        <span class="text-gray-500">-</span>
+                        <input type="date" id="filter-date-end"
+                            class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end mt-4">
+                <button id="reset-filters-btn"
+                    class="px-4 py-2 text-gray-700 rounded-button text-sm font-medium hover:bg-gray-100 flex items-center whitespace-nowrap mr-2">
+                    <span>Réinitialiser</span>
+                </button>
+                <button id="apply-filters-btn"
+                    class="px-4 py-2 bg-primary text-white rounded-button text-sm font-medium hover:bg-primary/90 flex items-center whitespace-nowrap">
+                    <span>Appliquer les filtres</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Actions -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
+        <div class="flex items-center">
+            <label class="custom-checkbox mr-2">
+                <input type="checkbox" id="select-all">
+                <span class="checkbox-mark"></span>
+            </label>
+            <div id="bulk-actions" class="hidden items-center gap-2 ml-2">
+                <span class="text-sm text-gray-600" id="selected-count">0 sélectionné(s)</span>
+                <div class="h-4 border-r border-gray-300 mx-2"></div>
+                <button class="text-sm text-gray-600 hover:text-primary flex items-center">
+                    <div class="w-4 h-4 flex items-center justify-center mr-1">
+                        <i class="ri-mail-line"></i>
+                    </div>
+                    <span>Envoyer un email</span>
+                </button>
+                <button class="text-sm text-gray-600 hover:text-primary flex items-center">
+                    <div class="w-4 h-4 flex items-center justify-center mr-1">
+                        <i class="ri-file-list-3-line"></i>
+                    </div>
+                    <span>Générer des documents</span>
+                </button>
+                <button class="text-sm text-red-600 hover:text-red-700 flex items-center">
+                    <div class="w-4 h-4 flex items-center justify-center mr-1">
+                        <i class="ri-delete-bin-line"></i>
+                    </div>
+                    <span>Supprimer</span>
+                </button>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <button id="refresh-btn"
+                class="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-gray-100 rounded">
+                <i class="ri-refresh-line"></i>
+            </button>
+            <button id="view-mode-btn"
+                class="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-gray-100 rounded">
+                <i class="ri-list-check"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Students Table -->
+    <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-6">
+        <div class="table-container">
+            <table class="w-full">
+                <thead>
+                    <tr class="bg-gray-50 border-b">
+                        <th class="px-4 py-3 text-left">
+                            <div class="flex items-center">
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" id="select-all-header">
+                                    <span class="checkbox-mark"></span>
+                                </label>
+                            </div>
+                        </th>
+                        <th class="px-4 py-3 text-left">
+                            <div class="flex items-center">
+                                <span class="text-xs font-medium text-gray-500 uppercase tracking-wider">Élève</span>
+
+                            </div>
+                        </th>
+                        <th class="px-4 py-3 text-left">
+                            <div class="flex items-center">
+                                <span class="text-xs font-medium text-gray-500 uppercase tracking-wider">Sexe</span>
+
+                            </div>
+                        </th>
+                        <th class="px-4 py-3 text-left">
+                            <div class="flex items-center">
+                                <span class="text-xs font-medium text-gray-500 uppercase tracking-wider">Classe</span>
+
+                            </div>
+                        </th>
+                        <th class="px-4 py-3 text-left">
+                            <div class="flex items-center">
+                                <span class="text-xs font-medium text-gray-500 uppercase tracking-wider">Parents</span>
+
+                            </div>
+                        </th>
+                        <th class="px-4 py-3 text-left">
+                            <div class="flex items-center">
+                                <span class="text-xs font-medium text-gray-500 uppercase tracking-wider">Date
+                                    d'inscription</span>
+
+                            </div>
+                        </th>
+
+                        <th class="px-4 py-3 text-left">
+                            <span class="text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="px-4 py-3 bg-white border-t border-gray-200 sm:px-6">
+            <div class="flex justify-center pagination-container gap-2">
+                <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                    <div>
+                        <p id="eleve-count" class="text-sm text-gray-700"></p>
+                    </div>
+                    <div>
+                        <nav id="pagination-links" class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+                            aria-label="Pagination">
+
+                            <!--Ajout dynamique-->
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
