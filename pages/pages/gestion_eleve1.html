@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des élèves - AcademyFlow</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+    <link rel="stylesheet" href="../css/eleve.css">
+    <style>
+        :where([class^="ri-"])::before {
+            content: "\f3c2";
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4F46E5',
+                        secondary: '#8B5CF6'
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '4px',
+                        DEFAULT: '8px',
+                        'md': '12px',
+                        'lg': '16px',
+                        'xl': '20px',
+                        '2xl': '24px',
+                        '3xl': '32px',
+                        'full': '9999px',
+                        'button': '8px'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-4 border-b border-gray-200">
+                <a href="#" class="text-2xl font-['Pacifico'] text-primary">AcademyFlow</a>
+            </div>
+            <div class="p-4">
+                <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">MENU PRINCIPAL</h2>
+                <ul class="space-y-2">
+                    <li>
+                        <a href="#"
+                            class="flex items-center px-3 py-2 text-sm rounded-button text-gray-600 hover:bg-gray-100">
+                            <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                <i class="ri-dashboard-line"></i>
+                            </div>
+                            Tableau de bord
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="p-4">
+                <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">INSCRIPTION</h2>
+                <ul class="space-y-2">
+                    <li>
+                        <a href="inscription.html"
+                            class="flex items-center px-3 py-2 text-sm rounded-button text-gray-600 hover:bg-gray-100">
+                            <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                <i class="ri-user-add-line"></i>
+                            </div>
+                            Faire une inscription
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="flex items-center px-3 py-2 text-sm rounded-button text-gray-600 hover:bg-gray-100">
+                            <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                <i class="ri-search-line"></i>
+                            </div>
+                            Rechercher un élève
+                        </a>
+                    </li>
+                    <li>
+                        <a href="gestion_eleve.html"
+                            class="flex items-center px-3 py-2 text-sm rounded-button text-gray-600 hover:bg-gray-100">
+                            <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                <i class="ri-group-line"></i>
+                            </div>
+                            Gérer les élèves
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="p-4">
+                <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">SCOLARITÉ</h2>
+                <ul class="space-y-2">
+                    
+                    <li>
+                        <a href="#"
+                            class="flex items-center px-3 py-2 text-sm rounded-button text-gray-600 hover:bg-gray-100">
+                            <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                <i class="ri-file-list-line"></i>
+                            </div>
+                            Tableau de bord
+                        </a>
+                    </li>
+                    <li>
+                        <a href="caisse.html"
+                            class="flex items-center px-3 py-2 text-sm rounded-button text-gray-600 hover:bg-gray-100">
+                            <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                <i class="ri-money-euro-box-line"></i>
+                            </div>
+                            Entrée/Sortie de caisse
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="flex items-center px-3 py-2 text-sm rounded-button text-gray-600 hover:bg-gray-100">
+                            <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                <i class="ri-time-line"></i>
+                            </div>
+                            Rapports
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="p-4">
+                <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">PARAMÈTRES</h2>
+                <ul class="space-y-2">
+                    <li>
+                        <a href="../config.html"
+                            class="flex items-center px-3 py-2 text-sm rounded-button bg-primary bg-opacity-10 text-primary">
+                            <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                <i class="ri-settings-line"></i>
+                            </div>
+                            Configuration
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#"
+                            class="flex items-center px-3 py-2 text-sm rounded-button text-gray-600 hover:bg-gray-100">
+                            <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                <i class="ri-user-line"></i>
+                            </div>
+                            Mon compte
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="mt-auto p-4 border-t border-gray-200">
+                <div class="flex items-center">
+                    <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center mr-3">
+                        <span>M</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium">Martine Dubois</p>
+                        <p class="text-xs text-gray-500">Administrateur</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Navigation -->
+            <header class="bg-white border-b border-gray-200">
+                <div class="flex items-center justify-between px-6 py-3">
+                    <div class="flex items-center space-x-2">
+                        <a href="#" class="text-gray-600 hover:text-gray-900">Accueil</a>
+                        <span class="text-gray-400">/</span>
+                        <a href="https://readdy.ai/home/37f3f6a3-4a8b-4bee-9f16-c8dbddfcb0ed/d6f8e985-193e-4346-aaeb-fcef5f69b121"
+                            data-readdy="true" class="text-gray-800">Configuration</a>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="text-gray-600" id="date">14 juin 2025</div>
+                        <div class="relative">
+                            <input type="text" placeholder="Rechercher..."
+                                class="pl-10 pr-4 py-2 border border-gray-300 rounded-button text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <div
+                                class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 flex items-center justify-center text-gray-400">
+                                <i class="ri-search-line"></i>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <button
+                                class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200">
+                                <div class="w-5 h-5 flex items-center justify-center">
+                                    <i class="ri-notification-line"></i>
+                                </div>
+                            </button>
+                            <div class="absolute top-0 right-0 w-2 h-2 rounded-full bg-red-500"></div>
+                        </div>
+                        <button class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center">
+                            <span>M</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+            <!-- Page Content -->
+            <main class="flex-1 overflow-y-auto bg-gray-50 ">
+
+                <!-- Main Content Area -->
+                <div class="p-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+                        <div>
+                            <h1 class="text-2xl font-bold text-gray-800">Gestion des Élèves</h1>
+                            <p class="text-sm text-gray-500 mt-1">Gérez tous les élèves inscrits dans votre
+                                établissement
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <a href="https://readdy.ai/home/459dcc36-2d90-46c1-b16a-e8f21dd5c17b/99744ecc-58a5-40da-bbcc-c13e84806c36"
+                                data-readdy="true"
+                                class="px-4 py-2 bg-primary text-white rounded-button text-sm font-medium hover:bg-primary/90 flex items-center whitespace-nowrap">
+                                <div class="w-4 h-4 flex items-center justify-center mr-2">
+                                    <i class="ri-user-add-line"></i>
+                                </div>
+                                <span>Ajouter un élève</span>
+                            </a>
+                            <button id="export-btn"
+                                class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-button text-sm font-medium hover:bg-gray-50 flex items-center whitespace-nowrap">
+                                <div class="w-4 h-4 flex items-center justify-center mr-2">
+                                    <i class="ri-download-line"></i>
+                                </div>
+                                <span>Exporter</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Search and Filter Bar -->
+                    <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <!-- Search Bar -->
+                            <div class="relative flex-1">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <div class="w-5 h-5 flex items-center justify-center text-gray-400">
+                                        <i class="ri-search-line"></i>
+                                    </div>
+                                </div>
+                                <input type="text" id="search-input"
+                                    placeholder="Rechercher un élève par nom, prénom ou classe..."
+                                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                            </div>
+
+                            <!-- Quick Filters -->
+                            <div class="flex items-center gap-2">
+                                <div class="px-1 py-1 bg-gray-100 rounded-full flex items-center">
+                                    <button
+                                        class="px-3 py-1 rounded-full text-sm font-medium bg-primary text-white">Tous</button>
+                                    <button
+                                        class="px-3 py-1 rounded-full text-sm font-medium text-gray-700 hover:bg-gray-200">Primaire</button>
+                                    <button
+                                        class="px-3 py-1 rounded-full text-sm font-medium text-gray-700 hover:bg-gray-200">Collège</button>
+
+                                </div>
+                                <button id="advanced-filter-btn"
+                                    class="w-10 h-10 flex items-center justify-center text-gray-500 hover:bg-gray-100 rounded-full">
+                                    <i class="ri-filter-3-line"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Advanced Filters (Hidden by default) -->
+                        <div id="advanced-filters" class="mt-4 pt-4 border-t hidden">
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                <div>
+                                    <label for="filter-classe"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Classe</label>
+                                    <select id="filter-classe"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary/20 focus:outline-none pr-8">
+                                        <option value="">Toutes les classes</option>
+                                        <option value="cp">CP</option>
+                                        <option value="ce1">CE1</option>
+                                        <option value="ce2">CE2</option>
+                                        <!--Les classes seront ajouter automatiquement-->
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="filter-statut"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Statut</label>
+                                    <select id="filter-statut"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary/20 focus:outline-none pr-8">
+                                        <option value="">Sexe</option>
+                                        <option value="actif">M</option>
+                                        <option value="inactif">F</option>
+
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="filter-date" class="block text-sm font-medium text-gray-700 mb-1">Date
+                                        d'inscription</label>
+                                    <div class="flex items-center gap-2">
+                                        <input type="date" id="filter-date-start"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                                        <span class="text-gray-500">-</span>
+                                        <input type="date" id="filter-date-end"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex justify-end mt-4">
+                                <button id="reset-filters-btn"
+                                    class="px-4 py-2 text-gray-700 rounded-button text-sm font-medium hover:bg-gray-100 flex items-center whitespace-nowrap mr-2">
+                                    <span>Réinitialiser</span>
+                                </button>
+                                <button id="apply-filters-btn"
+                                    class="px-4 py-2 bg-primary text-white rounded-button text-sm font-medium hover:bg-primary/90 flex items-center whitespace-nowrap">
+                                    <span>Appliquer les filtres</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Table Actions -->
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
+                        <div class="flex items-center">
+                            <label class="custom-checkbox mr-2">
+                                <input type="checkbox" id="select-all">
+                                <span class="checkbox-mark"></span>
+                            </label>
+                            <div id="bulk-actions" class="hidden items-center gap-2 ml-2">
+                                <span class="text-sm text-gray-600" id="selected-count">0 sélectionné(s)</span>
+                                <div class="h-4 border-r border-gray-300 mx-2"></div>
+                                <button class="text-sm text-gray-600 hover:text-primary flex items-center">
+                                    <div class="w-4 h-4 flex items-center justify-center mr-1">
+                                        <i class="ri-mail-line"></i>
+                                    </div>
+                                    <span>Envoyer un email</span>
+                                </button>
+                                <button class="text-sm text-gray-600 hover:text-primary flex items-center">
+                                    <div class="w-4 h-4 flex items-center justify-center mr-1">
+                                        <i class="ri-file-list-3-line"></i>
+                                    </div>
+                                    <span>Générer des documents</span>
+                                </button>
+                                <button class="text-sm text-red-600 hover:text-red-700 flex items-center">
+                                    <div class="w-4 h-4 flex items-center justify-center mr-1">
+                                        <i class="ri-delete-bin-line"></i>
+                                    </div>
+                                    <span>Supprimer</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="refresh-btn"
+                                class="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-gray-100 rounded">
+                                <i class="ri-refresh-line"></i>
+                            </button>
+                            <button id="view-mode-btn"
+                                class="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-gray-100 rounded">
+                                <i class="ri-list-check"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Students Table -->
+                    <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-6">
+                        <div class="table-container">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="bg-gray-50 border-b">
+                                        <th class="px-4 py-3 text-left">
+                                            <div class="flex items-center">
+                                                <label class="custom-checkbox">
+                                                    <input type="checkbox" id="select-all-header">
+                                                    <span class="checkbox-mark"></span>
+                                                </label>
+                                            </div>
+                                        </th>
+                                        <th class="px-4 py-3 text-left">
+                                            <div class="flex items-center">
+                                                <span
+                                                    class="text-xs font-medium text-gray-500 uppercase tracking-wider">Élève</span>
+
+                                            </div>
+                                        </th>
+                                        <th class="px-4 py-3 text-left">
+                                            <div class="flex items-center">
+                                                <span
+                                                    class="text-xs font-medium text-gray-500 uppercase tracking-wider">Sexe</span>
+
+                                            </div>
+                                        </th>
+                                        <th class="px-4 py-3 text-left">
+                                            <div class="flex items-center">
+                                                <span
+                                                    class="text-xs font-medium text-gray-500 uppercase tracking-wider">Classe</span>
+
+                                            </div>
+                                        </th>
+                                        <th class="px-4 py-3 text-left">
+                                            <div class="flex items-center">
+                                                <span
+                                                    class="text-xs font-medium text-gray-500 uppercase tracking-wider">Parents</span>
+
+                                            </div>
+                                        </th>
+                                        <th class="px-4 py-3 text-left">
+                                            <div class="flex items-center">
+                                                <span
+                                                    class="text-xs font-medium text-gray-500 uppercase tracking-wider">Date
+                                                    d'inscription</span>
+
+                                            </div>
+                                        </th>
+
+                                        <th class="px-4 py-3 text-left">
+                                            <span
+                                                class="text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="px-4 py-3 bg-white border-t border-gray-200 sm:px-6">
+                            <div class="flex justify-center pagination-container gap-2">
+                                <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                                    <div>
+                                        <p id="eleve-count" class="text-sm text-gray-700"></p>
+                                    </div>
+                                    <div>
+                                        <nav id="pagination-links"
+                                            class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+                                            aria-label="Pagination">
+
+                                         <!--Ajout dynamique-->
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Delete Confirmation Modal (Hidden by default) -->
+        <div id="delete-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                </div>
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                <div
+                    class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div
+                                class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                                <div class="w-6 h-6 flex items-center justify-center text-red-600">
+                                    <i class="ri-error-warning-line"></i>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                    Supprimer l'élève
+                                </h3>
+                                <div class="mt-2">
+                                    <p class="text-sm text-gray-500">
+                                        Êtes-vous sûr de vouloir supprimer cet élève ? Cette action est irréversible et
+                                        toutes les données associées seront définitivement supprimées.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button type="button" id="confirm-delete"
+                            class="w-full inline-flex justify-center rounded-button border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm whitespace-nowrap">
+                            Confirmer la suppression
+                        </button>
+                        <button type="button" id="cancel-delete"
+                            class="mt-3 w-full inline-flex justify-center rounded-button border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm whitespace-nowrap">
+                            Annuler
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Modal pour la modification des infos élèves-->
+         <div id="modal-recap" class="fixed inset-0 bg-black/50 modal-backdrop z-50 flex items-center justify-center p-4 hidden">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col animate-scale-in">
+
+    <!-- En-tête -->
+    <div class="flex items-center justify-between p-6 border-b border-gray-200">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 bg-primary/10 text-primary rounded-full flex items-center justify-center">
+          <i class="ri-file-list-3-line text-xl"></i>
+        </div>
+        <h2 class="text-xl font-bold text-gray-800">Modifier les informations de l'élève</h2>
+      </div>
+      <button onclick="fermerModalRecap()" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-700 transition-colors">
+        <i class="ri-close-line"></i>
+      </button>
+    </div>
+
+    <!-- Contenu -->
+    <form id="form-recap-eleve" class="flex-1 overflow-y-auto scrollbar-thin">
+      <div class="p-6 space-y-6">
+
+        <!-- Élève -->
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6">
+          <h3 class="text-lg font-semibold mb-4 flex items-center">
+            <i class="ri-user-line mr-2 text-blue-600"></i> Informations de l'élève
+          </h3>
+
+          <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <!-- Photo (juste affichée) -->
+            <div class="flex flex-col items-center">
+              <div class="w-24 h-24 bg-gray-200 rounded-xl overflow-hidden mb-2">
+                <img id="recap-photo" class="w-full h-full object-cover hidden" alt="Photo">
+                <div id="recap-photo-placeholder" class="w-full h-full flex items-center justify-center text-gray-400">
+                  <i class="ri-user-line text-2xl"></i>
+                </div>
+              </div>
+              <span class="text-xs text-gray-500">Photo</span>
+            </div>
+
+            <!-- Infos personnelles -->
+            <div class="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input type="text" id="recap-prenom" class="input" placeholder="Prénom" required />
+              <input type="text" id="recap-nom" class="input" placeholder="Nom" required />
+              <select id="recap-sexe" class="input">
+                <option value="">Sexe</option>
+                <option value="M">Masculin</option>
+                <option value="F">Féminin</option>
+              </select>
+              <input type="date" id="recap-date-naissance" class="input" />
+              <input type="text" id="recap-lieu-naissance" class="input" placeholder="Lieu de naissance" />
+              <input type="text" id="recap-nationalite" class="input" placeholder="Nationalité" />
+              <input type="text" id="recap-etablissement-precedent" class="input" placeholder="Établissement précédent" />
+              <textarea id="recap-informations-sante" class="input" placeholder="Infos santé"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Parents -->
+        <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6">
+          <h3 class="text-lg font-semibold mb-4 flex items-center">
+            <i class="ri-group-line mr-2 text-green-600"></i> Coordonnées des parents
+          </h3>
+
+          <!-- Parent 1 -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <input type="text" id="recap-parent1-prenom" class="input" placeholder="Prénom parent 1" />
+            <input type="text" id="recap-parent1-nom" class="input" placeholder="Nom parent 1" />
+            <input type="text" id="recap-parent1-relation" class="input" placeholder="Relation" />
+            <input type="text" id="recap-parent1-profession" class="input" placeholder="Profession" />
+            <input type="text" id="recap-parent1-telephone" class="input" placeholder="Téléphone" />
+            <input type="email" id="recap-parent1-email" class="input" placeholder="Email" />
+          </div>
+
+          <!-- Parent 2 (optionnel) -->
+          <div id="recap-parent2-section" class="mt-6">
+            <h4 class="font-medium text-gray-800 mb-2">Parent 2 (optionnel)</h4>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <input type="text" id="recap-parent2-prenom" class="input" placeholder="Prénom parent 2" />
+              <input type="text" id="recap-parent2-nom" class="input" placeholder="Nom parent 2" />
+              <input type="text" id="recap-parent2-relation" class="input" placeholder="Relation" />
+              <input type="text" id="recap-parent2-profession" class="input" placeholder="Profession" />
+              <input type="text" id="recap-parent2-telephone" class="input" placeholder="Téléphone" />
+              <input type="email" id="recap-parent2-email" class="input" placeholder="Email" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Adresse -->
+        <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl p-6">
+          <h3 class="text-lg font-semibold mb-4 flex items-center">
+            <i class="ri-map-pin-line mr-2 text-yellow-600"></i> Adresse
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input type="text" id="recap-adresse-rue" class="input" placeholder="Rue" />
+            <input type="text" id="recap-adresse-ville" class="input" placeholder="Ville" />
+            <input type="text" id="recap-adresse-pays" class="input" placeholder="Pays" />
+          </div>
+        </div>
+
+        <!-- Scolarité -->
+        <div class="bg-gradient-to-r from-purple-50 to-violet-50 rounded-xl p-6">
+          <h3 class="text-lg font-semibold mb-4 flex items-center">
+            <i class="ri-school-line mr-2 text-purple-600"></i> Inscription scolaire
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input type="text" id="recap-annee-scolaire" class="input" placeholder="Année scolaire" />
+            <input type="date" id="recap-date-inscription" class="input" placeholder="Date inscription" />
+            <input type="text" id="recap-niveau" class="input" placeholder="Niveau" />
+            <input type="text" id="recap-classe" class="input" placeholder="Classe" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Boutons -->
+      <div class="border-t border-gray-200 p-6">
+        <div class="flex justify-end space-x-3">
+          <button type="button" onclick="fermerModalRecap()" class="px-4 py-2 bg-gray-200 rounded-lg">Annuler</button>
+          <button type="submit" id="recap-id" class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors flex items-center space-x-2">
+            <span>Appliquer les modifications</span>
+            <i class="ri-check-line"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+        <!-- Export Options Modal (Hidden by default) -->
+        <div id="export-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                </div>
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                <div
+                    class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div
+                                class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-primary bg-opacity-10 sm:mx-0 sm:h-10 sm:w-10">
+                                <div class="w-6 h-6 flex items-center justify-center text-primary">
+                                    <i class="ri-download-line"></i>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                    Exporter les données
+                                </h3>
+                                <div class="mt-4 space-y-3">
+                                    <div class="border rounded-lg p-3 hover:bg-gray-50 cursor-pointer">
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 flex items-center justify-center text-red-600">
+                                                <i class="ri-file-pdf-line ri-lg"></i>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm font-medium text-gray-900">Exporter en PDF</p>
+                                                <p class="text-xs text-gray-500">Document formaté pour impression</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="border rounded-lg p-3 hover:bg-gray-50 cursor-pointer">
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 flex items-center justify-center text-green-600">
+                                                <i class="ri-file-excel-line ri-lg"></i>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm font-medium text-gray-900">Exporter en Excel</p>
+                                                <p class="text-xs text-gray-500">Fichier tableur modifiable</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="border rounded-lg p-3 hover:bg-gray-50 cursor-pointer">
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 flex items-center justify-center text-blue-600">
+                                                <i class="ri-file-text-line ri-lg"></i>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm font-medium text-gray-900">Exporter en CSV</p>
+                                                <p class="text-xs text-gray-500">Fichier texte compatible avec d'autres
+                                                    systèmes</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button type="button" id="cancel-export"
+                            class="w-full inline-flex justify-center rounded-button border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:w-auto sm:text-sm whitespace-nowrap">
+                            Fermer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="toast" class="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg hidden z-50 transition-all duration-300"></div>
+
+
+        <script src="eleve.js"></script>
+</body>
+
+</html>
