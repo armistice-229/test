@@ -1,0 +1,4 @@
+.input-error {
+  border-color: #dc2626 !important; /* rouge-600 */
+  background-color: #fef2f2;         /* rose très pâle */
+}
