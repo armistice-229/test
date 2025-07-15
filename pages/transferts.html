@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AcademyFlow - Système de gestion scolaire efficace pour votre établissement">
+    <title>AcademyFlow - Gérez efficacement votre école</title>
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" as="style">
+
+    <!-- Favicon -->
+    <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/main.css">
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+
+    <script>
+        // Optimized Tailwind config
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eef2ff',
+                            500: '#4f46e5',
+                            600: '#4338ca',
+                            700: '#3730a3'
+                        },
+                        secondary: {
+                            50: '#f5f3ff',
+                            500: '#8b5cf6',
+                            600: '#7c3aed'
+                        }
+                    },
+                    animation: {
+                        'slide-in': 'slideIn 0.2s ease-out',
+                        'scale-in': 'scaleIn 0.15s ease-out'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 min-h-screen font-sans">
+    <!-- Mobile sidebar overlay -->
+    <div id="sidebar-overlay" class="sidebar-overlay" aria-hidden="true"></div>
+
+    <div class="flex h-screen overflow-hidden">
+        <!-- SIDEBAR -->
+        <aside id="sidebar"
+            class="sidebar w-64 bg-white border-r border-gray-200 flex flex-col overflow-hidden md:translate-x-0 fixed md:relative z-50 h-full">
+            <!-- Header -->
+            <div class="flex items-center justify-between p-4 border-b border-gray-200 min-h-[64px]">
+                <a href="pages/main.html"
+                    class="flex items-center space-x-3 text-primary-500 hover:text-secondary-500 smooth-transition focus-ring rounded-md">
+                    <svg class="w-8 h-8 text-secondary-500" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                            d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM12 13L3.74 8.5 12 4l8.26 4.5L12 13zm-1 3h2v2h-2v-2z" />
+                    </svg>
+                    <span class="text-xl font-bold tracking-tight">
+                        <span class="text-gray-800">Academy</span><span class="text-secondary-500">Flow</span>
+                    </span>
+                </a>
+
+                <!-- Mobile close button -->
+                <button id="close-sidebar" class="md:hidden p-2 rounded-md hover:bg-gray-100 focus-ring"
+                    aria-label="Fermer le menu">
+                    <i class="ri-close-line text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex-1 p-4 overflow-y-auto custom-scrollbar" role="navigation"
+                aria-label="Navigation principale">
+                <!-- Menu principal -->
+                <section class="mb-6">
+                    <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Menu principal</h2>
+                    <ul class="space-y-1" role="list">
+                        <li>
+                            <a href="../pages/main.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-dashboard-line mr-3 text-lg" aria-hidden="true"></i>
+                                Tableau de bord
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Élèves -->
+                <section class="mb-6">
+                    <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Élèves</h2>
+                    <ul class="space-y-1" role="list">
+                        <li>
+                            <a href="../pages/inscription.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-user-add-line mr-3 text-lg" aria-hidden="true"></i>
+                                Nouvelle Inscription
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/gestion_eleve.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-file-list-line mr-3 text-lg" aria-hidden="true"></i>
+                                Liste des élèves
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/eleve.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-user-line mr-3 text-lg" aria-hidden="true"></i>
+                                Espaces Élèves
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/transferts.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-exchange-line mr-3 text-lg" aria-hidden="true"></i>
+                                Transferts
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Caisse -->
+                <section class="mb-6">
+                    <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Caisse</h2>
+                    <ul class="space-y-1" role="list">
+                        <li>
+                            <a href="../pages/caisse-dashboard.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-dashboard-line mr-3 text-lg" aria-hidden="true"></i>
+                                Tableau de bord
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/caisse.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-money-dollar-circle-line mr-3 text-lg" aria-hidden="true"></i>
+                                Encaissements
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/decaissements.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-exchange-dollar-line mr-3 text-lg" aria-hidden="true"></i>
+                                Décaissements
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/journal-caisse.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-book-open-line mr-3 text-lg" aria-hidden="true"></i>
+                                Journal de caisse
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/rapports-financiers.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-file-chart-line mr-3 text-lg" aria-hidden="true"></i>
+                                Rapports financiers
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Statistiques -->
+                <section class="mb-6">
+                    <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Statistiques</h2>
+                    <ul class="space-y-1" role="list">
+                        <li>
+                            <a href="../pages/documents.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-file-copy-line mr-3 text-lg" aria-hidden="true"></i>
+                                Documents
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/archives.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-archive-line mr-3 text-lg" aria-hidden="true"></i>
+                                Archives
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Paramètres -->
+                <section>
+                    <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Paramètres</h2>
+                    <ul class="space-y-1" role="list">
+                        <li>
+                            <a href="../pages/configuration.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-settings-2-line mr-3 text-lg" aria-hidden="true"></i>
+                                Configuration
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+            </nav>
+
+            <!-- User Profile -->
+            <div class="p-4 border-t border-gray-200 bg-gray-50">
+                <div class="flex items-center space-x-3">
+                    <div
+                        class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 text-white flex items-center justify-center font-semibold">
+                        <span id="user-initials">M</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p id="user-name" class="text-sm font-medium text-gray-800 truncate">Martine Akuavi SOSOUKPE</p>
+                        <p class="text-xs text-gray-500">Administrateur</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="bg-white border-b border-gray-200 z-10">
+                <div class="flex items-center justify-between px-4 md:px-6 py-3">
+                    <!-- Mobile menu button -->
+                    <div class="flex items-center space-x-4">
+                        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md hover:bg-gray-100 focus-ring"
+                            aria-label="Ouvrir le menu">
+                            <i class="ri-menu-line text-xl"></i>
+                        </button>
+
+                        <!-- Breadcrumb -->
+                        <nav class="flex items-center space-x-2 text-sm" aria-label="Fil d'Ariane">
+                            <a href="pages/main.html"
+                                class="text-gray-600 hover:text-gray-900 focus-ring rounded px-1">Accueil</a>
+                            <span class="text-gray-400">/</span>
+                            <!-- le titre des pages se met à jour automatiquement-->
+                            <span class="text-gray-800 font-medium" id="breadcrumb-title">Transferts</span>
+                        </nav>
+                    </div>
+
+                    <!-- Date and Time -->
+                    <div class="hidden sm:flex items-center space-x-6">
+                        <div class="flex items-center text-gray-600">
+                            <i class="ri-calendar-line mr-2" aria-hidden="true"></i>
+                            <time id="current-date" class="text-sm">9 juillet 2025</time>
+                        </div>
+                        <div class="flex items-center text-gray-600">
+                            <i class="ri-time-line mr-2" aria-hidden="true"></i>
+                            <time id="current-time" class="text-sm">14:30</time>
+                        </div>
+                    </div>
+
+                    <!-- Profile Dropdown -->
+                    <div class="relative">
+                        <button id="profile-btn"
+                            class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 text-white flex items-center justify-center hover:shadow-lg smooth-transition focus-ring transform hover:scale-105"
+                            aria-expanded="false" aria-haspopup="true">
+                            <i class="ri-user-line text-lg" aria-hidden="true"></i>
+                        </button>
+
+                        <div id="profile-dropdown"
+                            class="hidden absolute right-0 mt-2 w-72 bg-white border border-gray-200 rounded-xl shadow-xl z-50 animate-scale-in"
+                            role="menu" aria-orientation="vertical">
+                            <div
+                                class="px-4 py-3 border-b border-gray-100 bg-gradient-to-r from-primary-50 to-secondary-50 rounded-t-xl">
+                                <p class="text-xs text-gray-500 mb-1">École connectée</p>
+                                <p id="dropdown-school-name" class="text-sm font-semibold text-gray-800 truncate">Nom de
+                                    l'école</p>
+                            </div>
+
+                            <div class="py-2">
+                                <a href="../pages/configuration.html"
+                                    class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 smooth-transition"
+                                    role="menuitem">
+                                    <i class="ri-settings-2-line mr-3 text-lg" aria-hidden="true"></i>
+                                    Paramètres
+                                </a>
+                                <hr class="my-2 border-gray-100">
+                                <button id="logout-btn"
+                                    class="w-full flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 smooth-transition"
+                                    role="menuitem">
+                                    <i class="ri-logout-box-line mr-3 text-lg" aria-hidden="true"></i>
+                                    Déconnexion
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto bg-gray-50 p-4 md:p-6 custom-scrollbar">
+                <!-- Loading state -->
+                <div id="loading-state" class="hidden">
+                    <div class="animate-pulse space-y-4">
+                        <div class="h-8 bg-gray-200 rounded-md w-1/4"></div>
+                        <div class="h-4 bg-gray-200 rounded-md w-1/2"></div>
+                        <div class="h-32 bg-gray-200 rounded-lg"></div>
+                    </div>
+                </div>
+
+                <!-- Content will be loaded here -->
+                <div id="main-content">
+                    <div class="text-center py-20">
+                        <div class="inline-block bg-gray-100 text-primary p-6 rounded-full shadow-sm mb-6">
+                            <i class="ri-folder-warning-line text-4xl"></i>
+                        </div>
+
+                        <h1 class="text-2xl font-bold text-gray-800 mb-2">Page en construction</h1>
+                        <p class="text-gray-500 max-w-md mx-auto">
+                            Cette section n'est pas encore disponible. Elle est en cours de développement par notre
+                            équipe.
+                        </p>
+
+                        <button onclick="window.history.back()"
+                            class="mt-6 inline-flex items-center px-4 py-2 bg-primary text-white text-sm rounded-lg shadow hover:bg-primary/90 transition">
+                            <i class="ri-arrow-left-line mr-2"></i> Revenir
+                        </button>
+                    </div>
+                    <!-- End of main content -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/Sidebar&hearder.js"></script>
+</body>
+
+</html>

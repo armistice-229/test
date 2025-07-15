@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AcademyFlow - Système de gestion scolaire efficace pour votre établissement">
+    <title>AcademyFlow - Gérez efficacement votre école</title>
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" as="style">
+
+    <!-- Favicon -->
+    <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/inscription.css">
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+
+    <script>
+        // Optimized Tailwind config
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eef2ff',
+                            500: '#4f46e5',
+                            600: '#4338ca',
+                            700: '#3730a3'
+                        },
+                        secondary: {
+                            50: '#f5f3ff',
+                            500: '#8b5cf6',
+                            600: '#7c3aed'
+                        },
+                        success: {
+                            50: '#ecfdf5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857'
+                        },
+                        warning: {
+                            50: '#fffbeb',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309'
+                        },
+                        info: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8'
+                        },
+                        danger: {
+                            50: '#fef2f2',
+                            500: '#ef4444',
+                            600: '#dc2626',
+                            700: '#b91c1c'
+                        }
+                    },
+
+
+                    animation: {
+                        'slide-in': 'slideIn 0.2s ease-out',
+                        'scale-in': 'scaleIn 0.15s ease-out'
+
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 min-h-screen font-sans">
+    <!-- Mobile sidebar overlay -->
+    <div id="sidebar-overlay" class="sidebar-overlay" aria-hidden="true"></div>
+
+    <div class="flex h-screen overflow-hidden">
+        <!-- SIDEBAR -->
+        <aside id="sidebar"
+            class="sidebar w-64 bg-white border-r border-gray-200 flex flex-col overflow-hidden md:translate-x-0 fixed md:relative z-50 h-full">
+            <!-- Header -->
+            <div class="flex items-center justify-between p-4 border-b border-gray-200 min-h-[64px]">
+                <a href="pages/main.html"
+                    class="flex items-center space-x-3 text-primary-500 hover:text-secondary-500 smooth-transition focus-ring rounded-md">
+                    <svg class="w-8 h-8 text-secondary-500" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                            d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM12 13L3.74 8.5 12 4l8.26 4.5L12 13zm-1 3h2v2h-2v-2z" />
+                    </svg>
+                    <span class="text-xl font-bold tracking-tight">
+                        <span class="text-gray-800">Academy</span><span class="text-secondary-500">Flow</span>
+                    </span>
+                </a>
+
+                <!-- Mobile close button -->
+                <button id="close-sidebar" class="md:hidden p-2 rounded-md hover:bg-gray-100 focus-ring"
+                    aria-label="Fermer le menu">
+                    <i class="ri-close-line text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex-1 p-4 overflow-y-auto custom-scrollbar" role="navigation"
+                aria-label="Navigation principale">
+                <!-- Menu principal -->
+                <section class="mb-6">
+                    <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Menu principal</h2>
+                    <ul class="space-y-1" role="list">
+                        <li>
+                            <a href="../pages/main.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-dashboard-line mr-3 text-lg" aria-hidden="true"></i>
+                                Tableau de bord
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Élèves -->
+                <section class="mb-6">
+                    <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Élèves</h2>
+                    <ul class="space-y-1" role="list">
+                        <li>
+                            <a href="../pages/inscription.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-user-add-line mr-3 text-lg" aria-hidden="true"></i>
+                                Nouvelle Inscription
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/gestion_eleve.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-file-list-line mr-3 text-lg" aria-hidden="true"></i>
+                                Liste des élèves
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/eleve.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-user-line mr-3 text-lg" aria-hidden="true"></i>
+                                Espaces Élèves
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/transferts.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-exchange-line mr-3 text-lg" aria-hidden="true"></i>
+                                Transferts
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Caisse -->
+                <section class="mb-6">
+                    <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Caisse</h2>
+                    <ul class="space-y-1" role="list">
+                        <li>
+                            <a href="../pages/caisse-dashboard.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-dashboard-line mr-3 text-lg" aria-hidden="true"></i>
+                                Tableau de bord
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/caisse.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-money-dollar-circle-line mr-3 text-lg" aria-hidden="true"></i>
+                                Encaissements
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/decaissements.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-exchange-dollar-line mr-3 text-lg" aria-hidden="true"></i>
+                                Décaissements
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/journal-caisse.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-book-open-line mr-3 text-lg" aria-hidden="true"></i>
+                                Journal de caisse
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/rapports-financiers.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-file-chart-line mr-3 text-lg" aria-hidden="true"></i>
+                                Rapports financiers
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Statistiques -->
+                <section class="mb-6">
+                    <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Statistiques</h2>
+                    <ul class="space-y-1" role="list">
+                        <li>
+                            <a href="../pages/documents.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-file-copy-line mr-3 text-lg" aria-hidden="true"></i>
+                                Documents
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/archives.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-archive-line mr-3 text-lg" aria-hidden="true"></i>
+                                Archives
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Paramètres -->
+                <section>
+                    <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Paramètres</h2>
+                    <ul class="space-y-1" role="list">
+                        <li>
+                            <a href="../pages/configuration.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-settings-2-line mr-3 text-lg" aria-hidden="true"></i>
+                                Configuration
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+            </nav>
+
+            <!-- User Profile -->
+            <div class="p-4 border-t border-gray-200 bg-gray-50">
+                <div class="flex items-center space-x-3">
+                    <div
+                        class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 text-white flex items-center justify-center font-semibold">
+                        <span id="user-initials">M</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p id="user-name" class="text-sm font-medium text-gray-800 truncate">Martine Akuavi SOSOUKPE</p>
+                        <p class="text-xs text-gray-500">Administrateur</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="bg-white border-b border-gray-200 z-10">
+                <div class="flex items-center justify-between px-4 md:px-6 py-3">
+                    <!-- Mobile menu button -->
+                    <div class="flex items-center space-x-4">
+                        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md hover:bg-gray-100 focus-ring"
+                            aria-label="Ouvrir le menu">
+                            <i class="ri-menu-line text-xl"></i>
+                        </button>
+
+                        <!-- Breadcrumb -->
+                        <nav class="flex items-center space-x-2 text-sm" aria-label="Fil d'Ariane">
+                            <a href="../pages/main.html"
+                                class="text-gray-600 hover:text-gray-900 focus-ring rounded px-1">Accueil</a>
+                            <span class="text-gray-400">/</span>
+                            <!-- le titre des pages se met à jour automatiquement-->
+                            <span class="text-gray-800 font-medium" id="breadcrumb-title">Nouvelle Inscriptions</span>
+                        </nav>
+                    </div>
+
+                    <!-- Date and Time -->
+                    <div class="hidden sm:flex items-center space-x-6">
+                        <div class="flex items-center text-gray-600">
+                            <i class="ri-calendar-line mr-2" aria-hidden="true"></i>
+                            <time id="current-date" class="text-sm">8 juillet 2025</time>
+                        </div>
+                        <div class="flex items-center text-gray-600">
+                            <i class="ri-time-line mr-2" aria-hidden="true"></i>
+                            <time id="current-time" class="text-sm">14:30</time>
+                        </div>
+                    </div>
+
+                    <!-- Profile Dropdown -->
+                    <div class="relative">
+                        <button id="profile-btn"
+                            class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 text-white flex items-center justify-center hover:shadow-lg smooth-transition focus-ring transform hover:scale-105"
+                            aria-expanded="false" aria-haspopup="true">
+                            <i class="ri-user-line text-lg" aria-hidden="true"></i>
+                        </button>
+
+                        <div id="profile-dropdown"
+                            class="hidden absolute right-0 mt-2 w-72 bg-white border border-gray-200 rounded-xl shadow-xl z-50 animate-scale-in"
+                            role="menu" aria-orientation="vertical">
+                            <div
+                                class="px-4 py-3 border-b border-gray-100 bg-gradient-to-r from-primary-50 to-secondary-50 rounded-t-xl">
+                                <p class="text-xs text-gray-500 mb-1">École connectée</p>
+                                <p id="dropdown-school-name" class="text-sm font-semibold text-gray-800 truncate">Nom de
+                                    l'école</p>
+                            </div>
+
+                            <div class="py-2">
+                                <a href="../pages/configuration.html"
+                                    class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 smooth-transition"
+                                    role="menuitem">
+                                    <i class="ri-settings-2-line mr-3 text-lg" aria-hidden="true"></i>
+                                    Paramètres
+                                </a>
+                                <hr class="my-2 border-gray-100">
+                                <button id="logout-btn"
+                                    class="w-full flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 smooth-transition"
+                                    role="menuitem">
+                                    <i class="ri-logout-box-line mr-3 text-lg" aria-hidden="true"></i>
+                                    Déconnexion
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto bg-gray-50 p-4 md:p-6 custom-scrollbar">
+                <!-- Loading state -->
+                <div id="loading-state" class="hidden">
+                    <div class="animate-pulse space-y-4">
+                        <div class="h-8 bg-gray-200 rounded-md w-1/4"></div>
+                        <div class="h-4 bg-gray-200 rounded-md w-1/2"></div>
+                        <div class="h-32 bg-gray-200 rounded-lg"></div>
+                    </div>
+                </div>
+
+                <!-- Content will be loaded here -->
+                <div id="main-content">
+                    <div class="container mx-auto">
+                        <!-- Formulaire d'inscription -->
+                        <form id="inscription-form" class="space-y-6">
+
+                            <!-- Informations Générales de l'Élève -->
+                            <!-- On présente les informations ici en deux colonnes. Une premiere colone d'abord pour l'upload et le preview de la photo et l'autre colonne pour l'identité de l'élève -->
+                            <div
+                                class="form-section bg-white rounded-xl shadow p-6 mb-6 border border-gray-100 animate-slide-up">
+                                <h2 class="text-sm font-semibold text-gray-800 mb-4 flex items-center">
+                                    <span
+                                        class="flex items-center justify-center w-8 h-8 bg-primary-50 text-primary-700 rounded-full mr-3">1</span>
+                                    Informations Générales de l'Élève
+                                </h2>
+
+                                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                                    <!-- Photo -->
+                                    <div class="lg:col-span-3 flex flex-col items-center">
+                                        <div class="w-32 h-32 bg-gray-100 rounded-lg mb-2 overflow-hidden relative">
+                                            <img id="photo-preview" class="w-full h-full object-cover hidden"
+                                                alt="Photo de l'élève">
+                                            <div id="photo-placeholder"
+                                                class="w-full h-full flex flex-col items-center justify-center text-gray-400">
+                                                <i class="ri-user-line ri-xl mb-1"></i>
+                                                <span class="text-xs">Photo</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label for="photo-upload"
+                                                class="cursor-pointer px-3 py-1.5 bg-gray-50 text-gray-600 rounded text-xs font-medium hover:bg-gray-100 flex items-center">
+                                                <i class="ri-upload-2-line mr-1"></i> Télécharger
+                                            </label>
+                                            <input type="file" id="photo-upload" accept="image/*" class="hidden">
+                                        </div>
+                                        <p class="text-xs text-gray-400 mt-1">JPG ou PNG, max 2 Mo</p>
+                                    </div>
+
+                                    <!-- Identité -->
+                                    <div class="lg:col-span-9">
+                                        <h3 class="text-sm font-medium text-gray-700 mb-3 flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                class="h-4 w-4 text-primary-500 mr-1" viewBox="0 0 20 20"
+                                                fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                            Identité
+                                        </h3>
+
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label for="lastName" class="block text-xs text-gray-600 mb-1">Nom de
+                                                    famille <span class="text-primary-600">*</span></label>
+                                                <input type="text" id="lastName"
+                                                    class="input-focus-effect block w-full border border-gray-300 rounded-lg py-2 px-3 text-sm focus:ring-primary-500 focus:border-primary-500"
+                                                    placeholder="Entrez le nom">
+                                            </div>
+
+                                            <div>
+                                                <label for="firstName" class="block text-xs text-gray-600 mb-1">Prénoms
+                                                    <span class="text-primary-600">*</span></label>
+                                                <input type="text" id="firstName"
+                                                    class="input-focus-effect block w-full border border-gray-300 rounded-lg py-2 px-3 text-sm focus:ring-primary-500 focus:border-primary-500">
+                                            </div>
+
+                                            <div>
+                                                <label for="birthDate" class="block text-xs text-gray-600 mb-1">Date de
+                                                    naissance <span class="text-primary-600">*</span></label>
+                                                <div class="relative">
+                                                    <input type="date" id="birthDate"
+                                                        class="input-focus-effect block w-full border border-gray-300 rounded-lg py-2 px-3 text-sm focus:ring-primary-500 focus:border-primary-500"
+                                                        placeholder="jj/mm/aaaa">
+
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <label for="birthPlace" class="block text-xs text-gray-600 mb-1">Lieu de
+                                                    naissance</label>
+                                                <input type="text" id="birthPlace"
+                                                    class="input-focus-effect block w-full border border-gray-300 rounded-lg py-2 px-3 text-sm focus:ring-primary-500 focus:border-primary-500"
+                                                    placeholder="Ville">
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-4">
+                                            <label class="block text-xs text-gray-600 mb-1">Genre</label>
+                                            <div class="flex space-x-4">
+                                                <label class="inline-flex items-center">
+                                                    <input type="radio" name="gender" value="Masculin"
+                                                        class="h-4 w-4 text-primary-600 focus:ring-primary-500">
+                                                    <span class="ml-2 text-sm">Masculin</span>
+                                                </label>
+                                                <label class="inline-flex items-center">
+                                                    <input type="radio" name="gender" value="Féminin"
+                                                        class="h-4 w-4 text-primary-600 focus:ring-primary-500">
+                                                    <span class="ml-2 text-sm">Féminin</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Parcours scolaire -->
+                                <div class="mt-6">
+                                    <h3 class="text-sm font-medium text-gray-700 mb-3 flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-primary-500 mr-1"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path
+                                                d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
+                                        </svg>
+                                        Parcours scolaire antérieur
+                                    </h3>
+
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label for="previousSchool" class="block text-xs text-gray-600 mb-1">École
+                                                précédente</label>
+                                            <input type="text" id="previousSchool"
+                                                class="input-focus-effect block w-full border border-gray-300 rounded-lg py-2 px-3 text-sm focus:ring-primary-500 focus:border-primary-500"
+                                                placeholder="Nom de l'établissement">
+                                        </div>
+
+                                        <div>
+                                            <label for="previousClass" class="block text-xs text-gray-600 mb-1">Classe
+                                                précédente</label>
+                                            <input type="text" id="previousClass"
+                                                class="input-focus-effect block w-full border border-gray-300 rounded-lg py-2 px-3 text-sm focus:ring-primary-500 focus:border-primary-500"
+                                                placeholder="Ex : CP, CE1, 6ème...">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Informations sur les parents -->
+                            <div
+                                class="form-section bg-white rounded-xl shadow-sm p-6 mb-6 border border-gray-100 animate-slide-up">
+                                <h2 class="text-sm font-semibold text-gray-800 mb-6 flex items-center">
+                                    <span
+                                        class="flex items-center justify-center w-8 h-8 bg-primary-50 text-primary-700 rounded-full mr-3">2</span>
+                                    Informations sur les parents
+                                </h2>
+
+                                <!-- Parent 1 -->
+                                <div class="mb-8">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <h3 class="text-sm font-medium text-gray-700 flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                class="h-5 w-5 text-primary-500 mr-1" viewBox="0 0 20 20"
+                                                fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                            Parent 1 <span class="text-primary-600 ml-1">*</span>
+                                        </h3>
+                                    </div>
+
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label for="parent1Name"
+                                                class="block text-sm font-medium text-gray-700 mb-1">Nom et Prénoms
+                                                <span class="text-primary-600">*</span></label>
+                                            <input type="text" id="parent1Name"
+                                                class="input-focus-effect mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-4 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition duration-150">
+                                        </div>
+
+                                        <div>
+                                            <label for="parent1Lien"
+                                                class="block text-sm font-medium text-gray-700 mb-1">Lien</label>
+                                            <div class="relative">
+                                                <select id="parent1Privilege"
+                                                    class="input-focus-effect mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-4 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm appearance-none transition duration-150">
+                                                    <option>Sélectionner...</option>
+                                                    <option>Père</option>
+                                                    <option>Mère</option>
+                                                    <option>Tuteur</option>
+                                                    <option>Responsable légal</option>
+                                                </select>
+                                                <div
+                                                    class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                        class="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
+                                                        fill="currentColor">
+                                                        <path fill-rule="evenodd"
+                                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label for="parent1Contact"
+                                                class="block text-sm font-medium text-gray-700 mb-1">Contacts</label>
+                                            <div class="relative">
+                                                <input type="number" id="parent1Contact"
+                                                    class="input-focus-effect mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-4 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition duration-150">
+                                                <div
+                                                    class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                        class="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
+                                                        fill="currentColor">
+                                                        <path
+                                                            d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label for="parent1Email"
+                                                class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                                            <div class="relative">
+                                                <input type="email" id="parent1Email"
+                                                    class="input-focus-effect mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-4 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition duration-150">
+                                                <div
+                                                    class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                        class="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
+                                                        fill="currentColor">
+                                                        <path
+                                                            d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                                        <path
+                                                            d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Parent 2 (optionnel) -->
+                                <div class="mb-4">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <h3 class="text-sm font-medium text-gray-700 flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                class="h-5 w-5 text-primary-500 mr-1" viewBox="0 0 20 20"
+                                                fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                            Parent 2
+                                        </h3>
+                                        <button type="button"
+                                            class="add-parent-btn text-primary-600 hover:text-primary-800 text-sm font-medium flex items-center transition duration-150">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1"
+                                                viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                            Ajouter
+                                        </button>
+                                    </div>
+
+                                    <!-- Ce bloc serait affiché dynamiquement quand on clique sur "Ajouter" -->
+                                    <div id="parent2Fields"
+                                        class="hidden grid grid-cols-1  mt-4 bg-gray-50 p-4 rounded-lg">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label for="parent2Name"
+                                                    class="block text-sm font-medium text-gray-700 mb-1">Nom et Prénoms
+                                                    <span class="text-primary-600">*</span></label>
+                                                <input type="text" id="parent2Name"
+                                                    class="input-focus-effect mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-4 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition duration-150">
+                                            </div>
+
+                                            <div>
+                                                <label for="parent2Lien"
+                                                    class="block text-sm font-medium text-gray-700 mb-1">Lien</label>
+                                                <div class="relative">
+                                                    <select id="parent1Privilege"
+                                                        class="input-focus-effect mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-4 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm appearance-none transition duration-150">
+                                                        <option>Sélectionner...</option>
+                                                        <option>Père</option>
+                                                        <option>Mère</option>
+                                                        <option>Tuteur</option>
+                                                        <option>Responsable légal</option>
+                                                    </select>
+                                                    <div
+                                                        class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            class="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
+                                                            fill="currentColor">
+                                                            <path fill-rule="evenodd"
+                                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                                clip-rule="evenodd" />
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <label for="parent2Contact"
+                                                    class="block text-sm font-medium text-gray-700 mb-1">Contacts</label>
+                                                <div class="relative">
+                                                    <input type="number" id="parent2Contact"
+                                                        class="input-focus-effect mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-4 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition duration-150">
+                                                    <div
+                                                        class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            class="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
+                                                            fill="currentColor">
+                                                            <path
+                                                                d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <label for="parent2Email"
+                                                    class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                                                <div class="relative">
+                                                    <input type="email" id="parent2Email"
+                                                        class="input-focus-effect mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-4 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition duration-150">
+                                                    <div
+                                                        class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            class="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
+                                                            fill="currentColor">
+                                                            <path
+                                                                d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                                            <path
+                                                                d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Informations scolaires -->
+                            <div
+                                class="form-section bg-white rounded-xl shadow-sm p-6 mb-6 border border-gray-100 animate-slide-up">
+                                <h2 class="text-sm font-semibold text-gray-800 mb-6 flex items-center">
+                                    <span
+                                        class="flex items-center justify-center w-8 h-8 bg-primary-50 text-primary-700 rounded-full mr-3">3</span>
+                                    Informations scolaires
+                                </h2>
+
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div>
+                                        <label for="enrollmentYear"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Année
+                                            d'inscription</label>
+                                        <input type="text" id="enrollmentYear" readonly
+                                            class="bg-gray-100 input-focus-effect mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-4 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition duration-150">
+                                        <!--Les données seront récupérés depuis le model Année scolaire; il s'agit de l'année active-->
+                                    </div>
+
+                                    <div>
+                                        <label for="class"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Classe</label>
+                                        <div class="relative">
+                                            <!-- La liste des classes sera récupérée depuis le model Classe-->
+                                            <select id="class"
+                                                class="input-focus-effect mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-4 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm appearance-none transition duration-150">
+
+                                            </select>
+                                            <div
+                                                class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400"
+                                                    viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd"
+                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                        clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label for="enrollmentDate"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Date
+                                            d'inscription</label>
+                                        <!-- la date du jour, sera remplir automatique -->
+                                        <div class="relative">
+                                            <input type="date" id="enrollmentDate" required
+                                                class="input-focus-effect mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-4 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition duration-150"
+                                                placeholder="jj/mm/aaaa">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Informations supplémentaires -->
+                            <div
+                                class="form-section bg-white rounded-xl shadow-sm p-6 mb-6 border border-gray-100 animate-slide-up">
+                                <h2 class="text-sm font-semibold text-gray-800 mb-6 flex items-center">
+                                    <span
+                                        class="flex items-center justify-center w-8 h-8 bg-primary-50 text-primary-700 rounded-full mr-3">4</span>
+                                    Informations supplémentaires
+                                </h2>
+
+                                <label for="additionalInfo"
+                                    class="block text-sm font-medium text-gray-700 mb-2">Informations médicales,
+                                    allergies, besoins spéciaux...</label>
+                                <textarea id="additionalInfo" rows="4"
+                                    class="input-focus-effect mt-1 block w-full border border-gray-300 rounded-lg shadow-sm py-2 px-4 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition duration-150"
+                                    maxlength="500"></textarea>
+                                <p class="text-xs text-gray-500 text-right mt-1"><span id="charCount">0</span> /500
+                                    caractères</p>
+                            </div>
+
+                            <!-- Boutons -->
+                            <div class="flex justify-end items-center">
+                                <button type="submit" id="submit-btn"
+                                    class="px-6 py-3 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-success-600 hover:bg-success-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition duration-150 flex items-center justify-center">
+
+                                    <span id="submit-text">Enregistrer</span>
+
+                                    <!-- Spinner caché par défaut -->
+                                    <svg id="submit-spinner" class="hidden ml-2 h-5 w-5 animate-spin text-white"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                            stroke-width="4" />
+                                        <path class="opacity-75" fill="currentColor"
+                                            d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                                    </svg>
+                                </button>
+
+
+                            </div>
+                    </div>
+
+
+                    <!-- End of main content -->
+                </div>
+            </main>
+        </div>
+    </div>
+    <!-- Toast Notification -->
+    <div id="toast"
+        class="fixed bottom-6 right-6 z-50 hidden rounded-xl shadow-lg px-4 py-3 text-white text-sm transition-all duration-300">
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/Sidebar&hearder.js"></script>
+    <script src="../js/inscription.js"></script>
+    <script></script>
+
+</body>
+
+</html>

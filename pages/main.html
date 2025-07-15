@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AcademyFlow - Système de gestion scolaire efficace pour votre établissement">
+    <title>AcademyFlow - Gérez efficacement votre école</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" as="style">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/main.css">
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    
+    <script>
+        // Optimized Tailwind config
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eef2ff',
+                            500: '#4f46e5',
+                            600: '#4338ca',
+                            700: '#3730a3'
+                        },
+                        secondary: {
+                            50: '#f5f3ff',
+                            500: '#8b5cf6',
+                            600: '#7c3aed'
+                        }
+                    },
+                    animation: {
+                        'slide-in': 'slideIn 0.2s ease-out',
+                        'scale-in': 'scaleIn 0.15s ease-out'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 min-h-screen font-sans">
+    <!-- Mobile sidebar overlay -->
+    <div id="sidebar-overlay" class="sidebar-overlay" aria-hidden="true"></div>
+    
+    <div class="flex h-screen overflow-hidden">
+        <!-- SIDEBAR -->
+        <aside id="sidebar" class="sidebar w-64 bg-white border-r border-gray-200 flex flex-col overflow-hidden md:translate-x-0 fixed md:relative z-50 h-full">
+            <!-- Header -->
+            <div class="flex items-center justify-between p-4 border-b border-gray-200 min-h-[64px]">
+                <a href="pages/main.html" class="flex items-center space-x-3 text-primary-500 hover:text-secondary-500 smooth-transition focus-ring rounded-md">
+                    <svg class="w-8 h-8 text-secondary-500" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM12 13L3.74 8.5 12 4l8.26 4.5L12 13zm-1 3h2v2h-2v-2z" />
+                    </svg>
+                    <span class="text-xl font-bold tracking-tight">
+                        <span class="text-gray-800">Academy</span><span class="text-secondary-500">Flow</span>
+                    </span>
+                </a>
+                
+                <!-- Mobile close button -->
+                <button id="close-sidebar" class="md:hidden p-2 rounded-md hover:bg-gray-100 focus-ring" aria-label="Fermer le menu">
+                    <i class="ri-close-line text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex-1 p-4 overflow-y-auto custom-scrollbar" role="navigation" aria-label="Navigation principale">
+                <!-- Menu principal -->
+                <section class="mb-6">
+                    <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Menu principal</h2>
+                    <ul class="space-y-1" role="list">
+                        <li>
+                            <a href="../pages/main.html" class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-dashboard-line mr-3 text-lg" aria-hidden="true"></i>
+                                Tableau de bord
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Élèves -->
+                <section class="mb-6">
+                    <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Élèves</h2>
+                    <ul class="space-y-1" role="list">
+                        <li>
+                            <a href="../pages/inscription.html" class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-user-add-line mr-3 text-lg" aria-hidden="true"></i>
+                                Nouvelle Inscription
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/gestion_eleve.html" class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-file-list-line mr-3 text-lg" aria-hidden="true"></i>
+                                Liste des élèves
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/eleve.html" class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-user-line mr-3 text-lg" aria-hidden="true"></i>
+                                Espaces Élèves
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/transferts.html" class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-exchange-line mr-3 text-lg" aria-hidden="true"></i>
+                                Transferts
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Caisse -->
+                <section class="mb-6">
+                    <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Caisse</h2>
+                    <ul class="space-y-1" role="list">
+                        <li>
+                            <a href="../pages/caisse-dashboard.html" class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-dashboard-line mr-3 text-lg" aria-hidden="true"></i>
+                                Tableau de bord
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/caisse.html" class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-money-dollar-circle-line mr-3 text-lg" aria-hidden="true"></i>
+                                Encaissements
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/decaissements.html" class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-exchange-dollar-line mr-3 text-lg" aria-hidden="true"></i>
+                                Décaissements
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/journal-caisse.html" class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-book-open-line mr-3 text-lg" aria-hidden="true"></i>
+                                Journal de caisse
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/rapports-financiers.html" class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-file-chart-line mr-3 text-lg" aria-hidden="true"></i>
+                                Rapports financiers
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Statistiques -->
+                <section class="mb-6">
+                    <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Statistiques</h2>
+                    <ul class="space-y-1" role="list">
+                        <li>
+                            <a href="../pages/documents.html" class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-file-copy-line mr-3 text-lg" aria-hidden="true"></i>
+                                Documents
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/archives.html" class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-archive-line mr-3 text-lg" aria-hidden="true"></i>
+                                Archives
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Paramètres -->
+                <section>
+                    <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Paramètres</h2>
+                    <ul class="space-y-1" role="list">
+                        <li>
+                            <a href="../pages/configuration.html" class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-settings-2-line mr-3 text-lg" aria-hidden="true"></i>
+                                Configuration
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+            </nav>
+
+            <!-- User Profile -->
+            <div class="p-4 border-t border-gray-200 bg-gray-50">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 text-white flex items-center justify-center font-semibold">
+                        <span id="user-initials">M</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p id="user-name" class="text-sm font-medium text-gray-800 truncate">Martine Akuavi SOSOUKPE</p>
+                        <p class="text-xs text-gray-500">Administrateur</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="bg-white border-b border-gray-200 z-10">
+                <div class="flex items-center justify-between px-4 md:px-6 py-3">
+                    <!-- Mobile menu button -->
+                    <div class="flex items-center space-x-4">
+                        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md hover:bg-gray-100 focus-ring" aria-label="Ouvrir le menu">
+                            <i class="ri-menu-line text-xl"></i>
+                        </button>
+                        
+                        <!-- Breadcrumb -->
+                        <nav class="flex items-center space-x-2 text-sm" aria-label="Fil d'Ariane">
+                            <a href="../pages/main.html" class="text-gray-600 hover:text-gray-900 focus-ring rounded px-1">Accueil</a>
+                            <span class="text-gray-400">/</span>
+                            <!-- le titre des pages se met à jour automatiquement-->
+                            <span class="text-gray-800 font-medium" id="breadcrumb-title">Tableau de bord</span>
+                        </nav>
+                    </div>
+
+                    <!-- Date and Time -->
+                    <div class="hidden sm:flex items-center space-x-6">
+                        <div class="flex items-center text-gray-600">
+                            <i class="ri-calendar-line mr-2" aria-hidden="true"></i>
+                            <time id="current-date" class="text-sm">8 juillet 2025</time>
+                        </div>
+                        <div class="flex items-center text-gray-600">
+                            <i class="ri-time-line mr-2" aria-hidden="true"></i>
+                            <time id="current-time" class="text-sm">14:30</time>
+                        </div>
+                    </div>
+
+                    <!-- Profile Dropdown -->
+                    <div class="relative">
+                        <button id="profile-btn" 
+                                class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 text-white flex items-center justify-center hover:shadow-lg smooth-transition focus-ring transform hover:scale-105"
+                                aria-expanded="false"
+                                aria-haspopup="true">
+                            <i class="ri-user-line text-lg" aria-hidden="true"></i>
+                        </button>
+
+                        <div id="profile-dropdown" 
+                             class="hidden absolute right-0 mt-2 w-72 bg-white border border-gray-200 rounded-xl shadow-xl z-50 animate-scale-in"
+                             role="menu"
+                             aria-orientation="vertical">
+                            <div class="px-4 py-3 border-b border-gray-100 bg-gradient-to-r from-primary-50 to-secondary-50 rounded-t-xl">
+                                <p class="text-xs text-gray-500 mb-1">École connectée</p>
+                                <p id="dropdown-school-name" class="text-sm font-semibold text-gray-800 truncate">Nom de l'école</p>
+                            </div>
+                            
+                            <div class="py-2">
+                                <a href="../pages/configuration.html" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 smooth-transition" role="menuitem">
+                                    <i class="ri-settings-2-line mr-3 text-lg" aria-hidden="true"></i>
+                                    Paramètres
+                                </a>
+                                <hr class="my-2 border-gray-100">
+                                <button id="logout-btn" class="w-full flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 smooth-transition" role="menuitem">
+                                    <i class="ri-logout-box-line mr-3 text-lg" aria-hidden="true"></i>
+                                    Déconnexion
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto bg-gray-50 p-4 md:p-6 custom-scrollbar">
+                <!-- Loading state -->
+                <div id="loading-state" class="hidden">
+                    <div class="animate-pulse space-y-4">
+                        <div class="h-8 bg-gray-200 rounded-md w-1/4"></div>
+                        <div class="h-4 bg-gray-200 rounded-md w-1/2"></div>
+                        <div class="h-32 bg-gray-200 rounded-lg"></div>
+                    </div>
+                </div>
+                
+                <!-- Content will be loaded here -->
+                <div id="main-content">
+                   <div >
+               
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+                    <!-- Total Students Card -->
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <div class="flex items-center">
+                            <div
+                                class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-primary mr-4">
+                                <i class="ri-user-line ri-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">Total des élèves</p>
+                                <h3 class="text-2xl font-bold text-gray-800">1,248</h3>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center text-sm">
+                            <span class="text-green-500 flex items-center">
+                                <i class="ri-arrow-up-line mr-1"></i> 5.2%
+                            </span>
+                            <span class="text-gray-500 ml-2">depuis le mois dernier</span>
+                        </div>
+                    </div>
+                    <!-- New Registrations Card -->
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <div class="flex items-center">
+                            <div
+                                class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-4">
+                                <i class="ri-user-add-line ri-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">Inscriptions du jour</p>
+                                <h3 class="text-2xl font-bold text-gray-800">8</h3>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center text-sm">
+                            <span class="text-green-500 flex items-center">
+                                <i class="ri-arrow-up-line mr-1"></i> 12.3%
+                            </span>
+                            <span class="text-gray-500 ml-2">par rapport à hier</span>
+                        </div>
+                    </div>
+                    <!-- Cash Status Card -->
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <div class="flex items-center">
+                            <div
+                                class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-4">
+                                <i class="ri-money-euro-box-line ri-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">État de la caisse</p>
+                                <h3 class="text-2xl font-bold text-gray-800">14 250 €</h3>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center text-sm">
+                            <span class="text-green-500 flex items-center">
+                                <i class="ri-arrow-up-line mr-1"></i> 3.7%
+                            </span>
+                            <span class="text-gray-500 ml-2">depuis la semaine dernière</span>
+                        </div>
+                    </div>
+                    
+                </div>
+                <!-- Charts Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                    <!-- Registration Chart -->
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold text-gray-800">Évolution des inscriptions</h3>
+                            <div class="flex space-x-2">
+                                <button
+                                    class="px-3 py-1 text-xs font-medium bg-gray-100 text-gray-600 rounded-full hover:bg-gray-200">Semaine</button>
+                                <button
+                                    class="px-3 py-1 text-xs font-medium bg-primary text-white rounded-full">Mois</button>
+                                <button
+                                    class="px-3 py-1 text-xs font-medium bg-gray-100 text-gray-600 rounded-full hover:bg-gray-200">Année</button>
+                            </div>
+                        </div>
+                        <div id="registration-chart" class="h-64"></div>
+                    </div>
+                    <!-- Payment Status Chart -->
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold text-gray-800">État des paiements</h3>
+                            <div>
+                                <select
+                                    class="text-sm bg-gray-100 border-none rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary/20 pr-8">
+                                    <option>Tous les niveaux</option>
+                                    <option>Primaire</option>
+                                    <option>Collège</option>
+                                    <option>Lycée</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="payment-chart" class="h-64"></div>
+                    </div>
+                </div>
+                <!-- Recent Activities and Quick Actions -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                    <!-- Recent Activities -->
+                    <div class="lg:col-span-2 bg-white rounded-lg shadow-sm">
+                        <div class="p-6 border-b">
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-semibold text-gray-800">Activités récentes</h3>
+                                <button class="text-sm text-primary hover:underline">Voir tout</button>
+                            </div>
+                        </div>
+                        <div class="divide-y">
+                            <div class="p-4 flex items-start">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-primary flex-shrink-0 mt-1">
+                                    <i class="ri-user-add-line"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-gray-800">Nouvelle inscription</p>
+                                    <p class="text-sm text-gray-600">Emma Moreau a été inscrite en 3ème A</p>
+                                    <p class="text-xs text-gray-500 mt-1">Aujourd'hui à 10:25</p>
+                                </div>
+                            </div>
+                            <div class="p-4 flex items-start">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0 mt-1">
+                                    <i class="ri-money-euro-box-line"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-gray-800">Paiement reçu</p>
+                                    <p class="text-sm text-gray-600">Paiement de 350€ reçu de la famille Dupont</p>
+                                    <p class="text-xs text-gray-500 mt-1">Aujourd'hui à 09:42</p>
+                                </div>
+                            </div>
+                            <div class="p-4 flex items-start">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 flex-shrink-0 mt-1">
+                                    <i class="ri-edit-line"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-gray-800">Modification de dossier</p>
+                                    <p class="text-sm text-gray-600">Le dossier de Lucas Martin a été mis à jour</p>
+                                    <p class="text-xs text-gray-500 mt-1">Hier à 16:15</p>
+                                </div>
+                            </div>
+                            <div class="p-4 flex items-start">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600 flex-shrink-0 mt-1">
+                                    <i class="ri-alert-line"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-gray-800">Rappel de paiement</p>
+                                    <p class="text-sm text-gray-600">Rappel envoyé à 5 familles pour paiements en retard
+                                    </p>
+                                    <p class="text-xs text-gray-500 mt-1">Hier à 14:30</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Quick Actions -->
+                    <div class="bg-white rounded-lg shadow-sm">
+                        <div class="p-6 border-b">
+                            <h3 class="font-semibold text-gray-800">Actions rapides</h3>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <a href="#"
+                                class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                                    <i class="ri-user-add-line"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="font-medium text-gray-800">Nouvelle inscription</p>
+                                    <p class="text-xs text-gray-500">Inscrire un nouvel élève</p>
+                                </div>
+                            </a>
+                            <a href="#"
+                                class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                                    <i class="ri-money-euro-box-line"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="font-medium text-gray-800">Enregistrer un paiement</p>
+                                    <p class="text-xs text-gray-500">Ajouter une entrée de caisse</p>
+                                </div>
+                            </a>
+                            <a href="#"
+                                class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
+                                    <i class="ri-search-line"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="font-medium text-gray-800">Rechercher un élève</p>
+                                    <p class="text-xs text-gray-500">Consulter un dossier d'élève</p>
+                                </div>
+                            </a>
+                            <a href="#"
+                                class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600">
+                                    <i class="ri-file-list-3-line"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="font-medium text-gray-800">Générer un rapport</p>
+                                    <p class="text-xs text-gray-500">Créer un rapport personnalisé</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Students Table -->
+                <div class="bg-white rounded-lg shadow-sm mb-6">
+                    <div class="p-6 border-b">
+                        <div class="flex flex-wrap items-center justify-between gap-4">
+                            <h3 class="font-semibold text-gray-800">Liste des élèves récemment inscrits</h3>
+                            <div class="flex flex-wrap gap-3">
+                                <div class="relative">
+                                    <select
+                                        class="text-sm bg-gray-100 border-none rounded-lg pl-9 pr-4 py-2 focus:ring-2 focus:ring-primary/20 appearance-none">
+                                        <option>Toutes les classes</option>
+                                        <option>6ème</option>
+                                        <option>5ème</option>
+                                        <option>4ème</option>
+                                        <option>3ème</option>
+                                    </select>
+                                    <div
+                                        class="absolute left-0 top-0 w-9 h-full flex items-center justify-center text-gray-500">
+                                        <i class="ri-filter-line"></i>
+                                    </div>
+                                </div>
+                                <div class="relative">
+                                    <select
+                                        class="text-sm bg-gray-100 border-none rounded-lg pl-9 pr-4 py-2 focus:ring-2 focus:ring-primary/20 appearance-none">
+                                        <option>Tous les statuts</option>
+                                        <option>Payé</option>
+                                        <option>En attente</option>
+                                        <option>En retard</option>
+                                    </select>
+                                    <div
+                                        class="absolute left-0 top-0 w-9 h-full flex items-center justify-center text-gray-500">
+                                        <i class="ri-money-euro-box-line"></i>
+                                    </div>
+                                </div>
+                                <div class="relative">
+                                    <input type="text" placeholder="Rechercher un élève..."
+                                        class="text-sm bg-gray-100 border-none rounded-lg pl-9 pr-4 py-2 focus:ring-2 focus:ring-primary/20">
+                                    <div
+                                        class="absolute left-0 top-0 w-9 h-full flex items-center justify-center text-gray-500">
+                                        <i class="ri-search-line"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="bg-gray-50 text-left">
+                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <div class="flex items-center">
+                                            <label class="custom-checkbox">
+                                                <input type="checkbox" id="select-all">
+                                                <span class="checkbox-mark"></span>
+                                            </label>
+                                        </div>
+                                    </th>
+                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Nom
+                                    </th>
+                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Classe</th>
+                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Date d'inscription</th>
+                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Statut paiement</th>
+                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <label class="custom-checkbox">
+                                                <input type="checkbox">
+                                                <span class="checkbox-mark"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div
+                                                class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-primary">
+                                                <span class="text-xs font-medium">EM</span>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm font-medium text-gray-800">Emma Moreau</p>
+                                                <p class="text-xs text-gray-500">emma.moreau@example.com</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm text-gray-700">3ème A</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm text-gray-700">14/06/2025</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">Payé</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                        <div class="flex space-x-2">
+                                            <button
+                                                class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200">
+                                                <i class="ri-eye-line"></i>
+                                            </button>
+                                            <button
+                                                class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200">
+                                                <i class="ri-edit-line"></i>
+                                            </button>
+                                            <button
+                                                class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200">
+                                                <i class="ri-more-2-fill"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <label class="custom-checkbox">
+                                                <input type="checkbox">
+                                                <span class="checkbox-mark"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div
+                                                class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                                                <span class="text-xs font-medium">LM</span>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm font-medium text-gray-800">Lucas Martin</p>
+                                                <p class="text-xs text-gray-500">lucas.martin@example.com</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm text-gray-700">4ème B</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm text-gray-700">13/06/2025</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="px-2 py-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full">En
+                                            attente</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                        <div class="flex space-x-2">
+                                            <button
+                                                class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200">
+                                                <i class="ri-eye-line"></i>
+                                            </button>
+                                            <button
+                                                class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200">
+                                                <i class="ri-edit-line"></i>
+                                            </button>
+                                            <button
+                                                class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200">
+                                                <i class="ri-more-2-fill"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <label class="custom-checkbox">
+                                                <input type="checkbox">
+                                                <span class="checkbox-mark"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div
+                                                class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
+                                                <span class="text-xs font-medium">CL</span>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm font-medium text-gray-800">Camille Leroy</p>
+                                                <p class="text-xs text-gray-500">camille.leroy@example.com</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm text-gray-700">5ème A</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm text-gray-700">12/06/2025</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="px-2 py-1 text-xs font-medium bg-red-100 text-red-800 rounded-full">En
+                                            retard</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                        <div class="flex space-x-2">
+                                            <button
+                                                class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200">
+                                                <i class="ri-eye-line"></i>
+                                            </button>
+                                            <button
+                                                class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200">
+                                                <i class="ri-edit-line"></i>
+                                            </button>
+                                            <button
+                                                class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200">
+                                                <i class="ri-more-2-fill"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <label class="custom-checkbox">
+                                                <input type="checkbox">
+                                                <span class="checkbox-mark"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div
+                                                class="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600">
+                                                <span class="text-xs font-medium">TD</span>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm font-medium text-gray-800">Thomas Dubois</p>
+                                                <p class="text-xs text-gray-500">thomas.dubois@example.com</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm text-gray-700">6ème C</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm text-gray-700">11/06/2025</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">Payé</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                        <div class="flex space-x-2">
+                                            <button
+                                                class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200">
+                                                <i class="ri-eye-line"></i>
+                                            </button>
+                                            <button
+                                                class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200">
+                                                <i class="ri-edit-line"></i>
+                                            </button>
+                                            <button
+                                                class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200">
+                                                <i class="ri-more-2-fill"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <label class="custom-checkbox">
+                                                <input type="checkbox">
+                                                <span class="checkbox-mark"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div
+                                                class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-red-600">
+                                                <span class="text-xs font-medium">SB</span>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm font-medium text-gray-800">Sophie Bernard</p>
+                                                <p class="text-xs text-gray-500">sophie.bernard@example.com</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm text-gray-700">4ème A</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="text-sm text-gray-700">10/06/2025</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">Payé</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                        <div class="flex space-x-2">
+                                            <button
+                                                class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200">
+                                                <i class="ri-eye-line"></i>
+                                            </button>
+                                            <button
+                                                class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200">
+                                                <i class="ri-edit-line"></i>
+                                            </button>
+                                            <button
+                                                class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200">
+                                                <i class="ri-more-2-fill"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="px-6 py-4 border-t">
+                        <div class="flex flex-wrap items-center justify-between gap-4">
+                            <div class="text-sm text-gray-500">
+                                Affichage de 1 à 5 sur 248 élèves
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button
+                                    class="w-9 h-9 rounded-lg bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    disabled>
+                                    <i class="ri-arrow-left-s-line"></i>
+                                </button>
+                                <button
+                                    class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center text-white">
+                                    1
+                                </button>
+                                <button
+                                    class="w-9 h-9 rounded-lg bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200">
+                                    2
+                                </button>
+                                <button
+                                    class="w-9 h-9 rounded-lg bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200">
+                                    3
+                                </button>
+                                <span class="text-gray-500">...</span>
+                                <button
+                                    class="w-9 h-9 rounded-lg bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200">
+                                    50
+                                </button>
+                                <button
+                                    class="w-9 h-9 rounded-lg bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200">
+                                    <i class="ri-arrow-right-s-line"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                    <!-- End of default content -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/Sidebar&hearder.js"></script>
+    <script id="sidebar-toggle-script">
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('main-content');
+            const toggleBtn = document.getElementById('toggle-sidebar');
+            toggleBtn.addEventListener('click', function () {
+                sidebar.classList.toggle('sidebar-collapsed');
+                mainContent.classList.toggle('content-expanded');
+            });
+        });
+    </script>
+    <script id="dropdown-script">
+        document.addEventListener('DOMContentLoaded', function () {
+            const notificationBtn = document.getElementById('notification-btn');
+            const notificationDropdown = document.getElementById('notification-dropdown');
+            const userMenuBtn = document.getElementById('user-menu-btn');
+            const userDropdown = document.getElementById('user-dropdown');
+            function toggleDropdown(dropdown) {
+                dropdown.classList.toggle('show');
+            }
+            function closeDropdowns() {
+                notificationDropdown.classList.remove('show');
+                userDropdown.classList.remove('show');
+            }
+            notificationBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                toggleDropdown(notificationDropdown);
+                userDropdown.classList.remove('show');
+            });
+            userMenuBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                toggleDropdown(userDropdown);
+                notificationDropdown.classList.remove('show');
+            });
+            document.addEventListener('click', function () {
+                closeDropdowns();
+            });
+            notificationDropdown.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+            userDropdown.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+        });
+    </script>
+    <script id="checkbox-script">
+        document.addEventListener('DOMContentLoaded', function () {
+            const selectAllCheckbox = document.getElementById('select-all');
+            const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+            selectAllCheckbox.addEventListener('change', function () {
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = selectAllCheckbox.checked;
+                });
+            });
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    const allChecked = Array.from(checkboxes).every(c => c.checked);
+                    const someChecked = Array.from(checkboxes).some(c => c.checked);
+                    selectAllCheckbox.checked = allChecked;
+                    selectAllCheckbox.indeterminate = someChecked && !allChecked;
+                });
+            });
+        });
+    </script>
+    <script id="chart-script">
+        document.addEventListener('DOMContentLoaded', function () {
+            // Registration Chart
+            const registrationChart = echarts.init(document.getElementById('registration-chart'));
+            const registrationOption = {
+                animation: false,
+                tooltip: {
+                    trigger: 'axis',
+                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                    borderColor: '#e5e7eb',
+                    textStyle: {
+                        color: '#1f2937'
+                    }
+                },
+                grid: {
+                    top: 10,
+                    right: 10,
+                    bottom: 20,
+                    left: 40
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'],
+                    axisLine: {
+                        lineStyle: {
+                            color: '#e5e7eb'
+                        }
+                    },
+                    axisLabel: {
+                        color: '#1f2937'
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLine: {
+                        show: false
+                    },
+                    axisLabel: {
+                        color: '#1f2937'
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: '#f3f4f6'
+                        }
+                    }
+                },
+                series: [
+                    {
+                        name: 'Inscriptions',
+                        type: 'line',
+                        smooth: true,
+                        symbol: 'none',
+                        data: [35, 42, 48, 53, 49, 62, 73, 74, 78, 86, 94, 96],
+                        lineStyle: {
+                            width: 3,
+                            color: 'rgba(87, 181, 231, 1)'
+                        },
+                        areaStyle: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                                {
+                                    offset: 0,
+                                    color: 'rgba(87, 181, 231, 0.3)'
+                                },
+                                {
+                                    offset: 1,
+                                    color: 'rgba(87, 181, 231, 0.05)'
+                                }
+                            ])
+                        }
+                    }
+                ]
+            };
+            registrationChart.setOption(registrationOption);
+            // Payment Chart
+            const paymentChart = echarts.init(document.getElementById('payment-chart'));
+            const paymentOption = {
+                animation: false,
+                tooltip: {
+                    trigger: 'item',
+                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                    borderColor: '#e5e7eb',
+                    textStyle: {
+                        color: '#1f2937'
+                    }
+                },
+                legend: {
+                    orient: 'vertical',
+                    right: 10,
+                    top: 'center',
+                    textStyle: {
+                        color: '#1f2937'
+                    }
+                },
+                series: [
+                    {
+                        name: 'État des paiements',
+                        type: 'pie',
+                        radius: ['50%', '70%'],
+                        avoidLabelOverlap: false,
+                        itemStyle: {
+                            borderRadius: 8,
+                            borderColor: '#fff',
+                            borderWidth: 2
+                        },
+                        label: {
+                            show: false
+                        },
+                        emphasis: {
+                            label: {
+                                show: false
+                            }
+                        },
+                        labelLine: {
+                            show: false
+                        },
+                        data: [
+                            { value: 735, name: 'Payé', itemStyle: { color: 'rgba(87, 181, 231, 1)' } },
+                            { value: 310, name: 'En attente', itemStyle: { color: 'rgba(141, 211, 199, 1)' } },
+                            { value: 234, name: 'En retard', itemStyle: { color: 'rgba(251, 191, 114, 1)' } },
+                            { value: 135, name: 'Exonéré', itemStyle: { color: 'rgba(252, 141, 98, 1)' } }
+                        ]
+                    }
+                ]
+            };
+            paymentChart.setOption(paymentOption);
+            // Resize charts when window is resized
+            window.addEventListener('resize', function () {
+                registrationChart.resize();
+                paymentChart.resize();
+            });
+        });
+    </script>
+</body>
+</html>

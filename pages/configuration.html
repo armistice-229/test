@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AcademyFlow - Système de gestion scolaire efficace pour votre établissement">
+  <title>AcademyFlow - Gérez efficacement votre école</title>
+
+  <!-- Preload critical resources -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    as="style">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" as="style">
+
+  <!-- Favicon -->
+  <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/main.css">
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+
+  <script>
+    // Optimized Tailwind config
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#eef2ff',
+              500: '#4f46e5',
+              600: '#4338ca',
+              700: '#3730a3'
+            },
+            secondary: {
+              50: '#f5f3ff',
+              500: '#8b5cf6',
+              600: '#7c3aed'
+            },
+            success: {
+              50: '#ecfdf5',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857'
+            },
+            warning: {
+              50: '#fffbeb',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309'
+            },
+            info: {
+              50: '#eff6ff',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8'
+            },
+            danger: {
+              50: '#fef2f2',
+              500: '#ef4444',
+              600: '#dc2626',
+              700: '#b91c1c'
+            }
+          },
+          animation: {
+            'slide-in': 'slideIn 0.2s ease-out',
+            'scale-in': 'scaleIn 0.15s ease-out'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-gray-50 min-h-screen font-sans">
+  <!-- Mobile sidebar overlay -->
+  <div id="sidebar-overlay" class="sidebar-overlay" aria-hidden="true"></div>
+
+  <div class="flex h-screen overflow-hidden">
+    <!-- SIDEBAR -->
+    <aside id="sidebar"
+      class="sidebar w-64 bg-white border-r border-gray-200 flex flex-col overflow-hidden md:translate-x-0 fixed md:relative z-50 h-full">
+      <!-- Header -->
+      <div class="flex items-center justify-between p-4 border-b border-gray-200 min-h-[64px]">
+        <a href="../pages/main.html"
+          class="flex items-center space-x-3 text-primary-500 hover:text-secondary-500 smooth-transition focus-ring rounded-md">
+          <svg class="w-8 h-8 text-secondary-500" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM12 13L3.74 8.5 12 4l8.26 4.5L12 13zm-1 3h2v2h-2v-2z" />
+          </svg>
+          <span class="text-xl font-bold tracking-tight">
+            <span class="text-gray-800">Academy</span><span class="text-secondary-500">Flow</span>
+          </span>
+        </a>
+
+        <!-- Mobile close button -->
+        <button id="close-sidebar" class="md:hidden p-2 rounded-md hover:bg-gray-100 focus-ring"
+          aria-label="Fermer le menu">
+          <i class="ri-close-line text-xl"></i>
+        </button>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex-1 p-4 overflow-y-auto custom-scrollbar" role="navigation" aria-label="Navigation principale">
+        <!-- Menu principal -->
+        <section class="mb-6">
+          <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Menu principal</h2>
+          <ul class="space-y-1" role="list">
+            <li>
+              <a href="../pages/main.html"
+                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                <i class="ri-dashboard-line mr-3 text-lg" aria-hidden="true"></i>
+                Tableau de bord
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Élèves -->
+        <section class="mb-6">
+          <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Élèves</h2>
+          <ul class="space-y-1" role="list">
+            <li>
+              <a href="../pages/inscription.html"
+                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                <i class="ri-user-add-line mr-3 text-lg" aria-hidden="true"></i>
+                Nouvelle Inscription
+              </a>
+            </li>
+            <li>
+              <a href="../pages/gestion_eleve.html"
+                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                <i class="ri-file-list-line mr-3 text-lg" aria-hidden="true"></i>
+                Liste des élèves
+              </a>
+            </li>
+            <li>
+              <a href="../pages/eleve.html"
+                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                <i class="ri-user-line mr-3 text-lg" aria-hidden="true"></i>
+                Espaces Élèves
+              </a>
+            </li>
+            <li>
+              <a href="../pages/transferts.html"
+                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                <i class="ri-exchange-line mr-3 text-lg" aria-hidden="true"></i>
+                Transferts
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Caisse -->
+        <section class="mb-6">
+          <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Caisse</h2>
+          <ul class="space-y-1" role="list">
+            <li>
+              <a href="../pages/caisse-dashboard.html"
+                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                <i class="ri-dashboard-line mr-3 text-lg" aria-hidden="true"></i>
+                Tableau de bord
+              </a>
+            </li>
+            <li>
+              <a href="../pages/caisse.html"
+                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                <i class="ri-money-dollar-circle-line mr-3 text-lg" aria-hidden="true"></i>
+                Encaissements
+              </a>
+            </li>
+            <li>
+              <a href="../pages/decaissements.html"
+                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                <i class="ri-exchange-dollar-line mr-3 text-lg" aria-hidden="true"></i>
+                Décaissements
+              </a>
+            </li>
+            <li>
+              <a href="../pages/journal-caisse.html"
+                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                <i class="ri-book-open-line mr-3 text-lg" aria-hidden="true"></i>
+                Journal de caisse
+              </a>
+            </li>
+            <li>
+              <a href="../pages/rapports-financiers.html"
+                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                <i class="ri-file-chart-line mr-3 text-lg" aria-hidden="true"></i>
+                Rapports financiers
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Statistiques -->
+        <section class="mb-6">
+          <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Statistiques</h2>
+          <ul class="space-y-1" role="list">
+            <li>
+              <a href="../pages/documents.html"
+                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                <i class="ri-file-copy-line mr-3 text-lg" aria-hidden="true"></i>
+                Documents
+              </a>
+            </li>
+            <li>
+              <a href="../pages/archives.html"
+                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                <i class="ri-archive-line mr-3 text-lg" aria-hidden="true"></i>
+                Archives
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Paramètres -->
+        <section>
+          <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Paramètres</h2>
+          <ul class="space-y-1" role="list">
+            <li>
+              <a href="../pages/configuration.html"
+                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                <i class="ri-settings-2-line mr-3 text-lg" aria-hidden="true"></i>
+                Configuration
+              </a>
+            </li>
+          </ul>
+        </section>
+      </nav>
+
+      <!-- User Profile -->
+      <div class="p-4 border-t border-gray-200 bg-gray-50">
+        <div class="flex items-center space-x-3">
+          <div
+            class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 text-white flex items-center justify-center font-semibold">
+            <span id="user-initials">M</span>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p id="user-name" class="text-sm font-medium text-gray-800 truncate">Martine Akuavi SOSOUKPE</p>
+            <p class="text-xs text-gray-500">Administrateur</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+      <!-- Header -->
+      <header class="bg-white border-b border-gray-200 z-10">
+        <div class="flex items-center justify-between px-4 md:px-6 py-3">
+          <!-- Mobile menu button -->
+          <div class="flex items-center space-x-4">
+            <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md hover:bg-gray-100 focus-ring"
+              aria-label="Ouvrir le menu">
+              <i class="ri-menu-line text-xl"></i>
+            </button>
+
+            <!-- Breadcrumb -->
+            <nav class="flex items-center space-x-2 text-sm" aria-label="Fil d'Ariane">
+              <a href="pages/main.html" class="text-gray-600 hover:text-gray-900 focus-ring rounded px-1">Accueil</a>
+              <span class="text-gray-400">/</span>
+              <!-- le titre des pages se met à jour automatiquement-->
+              <span class="text-gray-800 font-medium" id="breadcrumb-title">Configuration</span>
+            </nav>
+          </div>
+
+          <!-- Date and Time -->
+          <div class="hidden sm:flex items-center space-x-6">
+            <div class="flex items-center text-gray-600">
+              <i class="ri-calendar-line mr-2" aria-hidden="true"></i>
+              <time id="current-date" class="text-sm">9 juillet 2025</time>
+            </div>
+            <div class="flex items-center text-gray-600">
+              <i class="ri-time-line mr-2" aria-hidden="true"></i>
+              <time id="current-time" class="text-sm">14:30</time>
+            </div>
+          </div>
+
+          <!-- Profile Dropdown -->
+          <div class="relative">
+            <button id="profile-btn"
+              class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 text-white flex items-center justify-center hover:shadow-lg smooth-transition focus-ring transform hover:scale-105"
+              aria-expanded="false" aria-haspopup="true">
+              <i class="ri-user-line text-lg" aria-hidden="true"></i>
+            </button>
+
+            <div id="profile-dropdown"
+              class="hidden absolute right-0 mt-2 w-72 bg-white border border-gray-200 rounded-xl shadow-xl z-50 animate-scale-in"
+              role="menu" aria-orientation="vertical">
+              <div
+                class="px-4 py-3 border-b border-gray-100 bg-gradient-to-r from-primary-50 to-secondary-50 rounded-t-xl">
+                <p class="text-xs text-gray-500 mb-1">École connectée</p>
+                <p id="dropdown-school-name" class="text-sm font-semibold text-gray-800 truncate">Nom de
+                  l'école</p>
+              </div>
+
+              <div class="py-2">
+                <a href="../pages/configuration.html"
+                  class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 smooth-transition"
+                  role="menuitem">
+                  <i class="ri-settings-2-line mr-3 text-lg" aria-hidden="true"></i>
+                  Paramètres
+                </a>
+                <hr class="my-2 border-gray-100">
+                <button id="logout-btn"
+                  class="w-full flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 smooth-transition"
+                  role="menuitem">
+                  <i class="ri-logout-box-line mr-3 text-lg" aria-hidden="true"></i>
+                  Déconnexion
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content Area -->
+      <main class="flex-1 overflow-y-auto bg-gray-50 p-4 md:p-6 custom-scrollbar">
+        <!-- Loading state -->
+        <div id="loading-state" class="hidden">
+          <div class="animate-pulse space-y-4">
+            <div class="h-8 bg-gray-200 rounded-md w-1/4"></div>
+            <div class="h-4 bg-gray-200 rounded-md w-1/2"></div>
+            <div class="h-32 bg-gray-200 rounded-lg"></div>
+          </div>
+        </div>
+
+        <!-- Content will be loaded here -->
+        <div id="main-content">
+          <div id="notification-container"></div>
+
+          <!-- Loading Overlay -->
+          <div id="loading-overlay"
+            class="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm z-50 hidden flex items-center justify-center">
+            <div class="bg-white p-6 rounded-xl shadow-xl flex items-center space-x-3">
+              <div class="loading-spinner"></div>
+              <span class="text-gray-700">Enregistrement en cours...</span>
+            </div>
+          </div>
+
+
+          <!-- Navigation par onglets améliorée -->
+          <div class="bg-white rounded-xl shadow-sm overflow-hidden animate-slide-in">
+            <div class="border-b border-gray-200">
+              <nav class="flex" aria-label="Navigation des onglets">
+                <button type="button"
+                  class="tab-btn flex-1 px-6 py-4 text-sm font-semibold border-b-2 border-transparent hover:bg-gray-50 smooth-transition tab-active relative"
+                  data-tab="1" data-title="Informations générales">
+                  <i class="ri-building-line mr-2" aria-hidden="true"></i>
+                  <span class="hidden sm:inline">Informations Générales</span>
+                  <span class="sm:hidden">Général</span>
+                  <div class="absolute top-0 right-2 w-2 h-2 bg-green-500 rounded-full hidden" id="check-1"></div>
+                </button>
+                <button type="button"
+                  class="tab-btn flex-1 px-6 py-4 text-sm font-semibold border-b-2 border-transparent hover:bg-gray-50 smooth-transition"
+                  data-tab="2" data-title="Classes et frais">
+                  <i class="ri-graduation-cap-line mr-2" aria-hidden="true"></i>
+                  <span class="hidden sm:inline">Classes & Frais</span>
+                  <span class="sm:hidden">Classes</span>
+                  <div class="absolute top-0 right-2 w-2 h-2 bg-green-500 rounded-full hidden" id="check-2"></div>
+                </button>
+                <button type="button"
+                  class="tab-btn flex-1 px-6 py-4 text-sm font-semibold border-b-2 border-transparent hover:bg-gray-50 smooth-transition"
+                  data-tab="3" data-title="Année scolaire">
+                  <i class="ri-calendar-line mr-2" aria-hidden="true"></i>
+                  <span class="hidden sm:inline">Année Scolaire</span>
+                  <span class="sm:hidden">Année</span>
+                  <div class="absolute top-0 right-2 w-2 h-2 bg-green-500 rounded-full hidden" id="check-3"></div>
+                </button>
+
+              </nav>
+            </div>
+
+            <div class="p-6">
+              <form id="academyflow-config-form">
+                <!-- Onglet 1: Informations Générales -->
+                <div class="tab-content animate-fade-in" id="tab-1">
+                  <div class="space-y-6">
+                    <!-- Section Informations Établissement -->
+                    <div
+                      class="bg-gradient-to-r from-white to-gray-50 p-6 rounded-xl shadow-md border-l-4 border-primary-500">
+                      <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="ri-building-line mr-2 text-primary-500"></i>
+                        Informations de l'établissement
+                      </h3>
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div class="group">
+                          <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Nom complet de l'école <span class="text-red-500">*</span>
+                          </label>
+                          <input type="text" id="nomEcole" name="nomEcole"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent smooth-transition"
+                            placeholder="Ex: École Primaire Saint-Michel">
+                        </div>
+                        <div class="group">
+                          <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Adresse complète <span class="text-red-500">*</span>
+                          </label>
+                          <input type="text" id="addresse" name="addresse"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent smooth-transition"
+                            placeholder="Numéro, rue, ville, code postal, pays">
+                        </div>
+                      </div>
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="group">
+                          <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Téléphone <span class="text-red-500">*</span>
+                          </label>
+                          <input type="tel" id="telephone" name="telephone"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent smooth-transition"
+                            placeholder="+229 96 45 78 12">
+                        </div>
+                        <div class="group">
+                          <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Email <span class="text-red-500">*</span>
+                          </label>
+                          <input type="email" id="emailEcole" name="emailEcole"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent smooth-transition"
+                            placeholder="contact@ecole.com">
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Accordéon Responsables optimisé -->
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                      <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="ri-user-star-line mr-2 text-primary-500"></i>
+                        Responsables de l'établissement
+                      </h3>
+
+                      <div id="accordion" class="space-y-3">
+                        <!-- Responsable 1 -->
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                          <button type="button"
+                            class="accordion-header w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 font-medium flex justify-between items-center smooth-transition"
+                            data-accordion="1">
+                            <span class="flex items-center">
+                              <i class="ri-user-line mr-2 text-primary-500"></i>
+                              Responsable 1
+                            </span>
+                            <i class="ri-arrow-down-s-line text-xl accordion-icon smooth-transition"></i>
+                          </button>
+                          <div class="accordion-panel hidden" data-panel="1">
+                            <div class="p-4 space-y-4">
+                              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                  <label class="block text-sm font-medium text-gray-700 mb-2">Prénoms</label>
+                                  <input type="text" id="prenomsResponsable1"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 smooth-transition"
+                                    placeholder="Ex: Jean-Paul">
+                                </div>
+                                <div>
+                                  <label class="block text-sm font-medium text-gray-700 mb-2">Nom</label>
+                                  <input type="text" id="nomResponsable1"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 smooth-transition"
+                                    placeholder="Ex: Agossou">
+                                </div>
+                              </div>
+                              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                  <label class="block text-sm font-medium text-gray-700 mb-2">Titre/Fonction</label>
+                                  <select id="fonctionResponsable1"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 smooth-transition">
+                                    <option value="">Sélectionner</option>
+                                    <option value="Directeur">Directeur</option>
+                                    <option value="Secretaire">Secrétaire</option>
+                                    <option value="Comptable">Comptable</option>
+                                  </select>
+                                </div>
+                                <div>
+                                  <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                  <input type="email" id="emailResponsable1"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 smooth-transition"
+                                    placeholder="directeur@ecole.com">
+                                </div>
+                              </div>
+                              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                  <label class="block text-sm font-medium text-gray-700 mb-2">Signature</label>
+                                  <input type="file" id="signature1" accept="image/*"
+class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:font-semibold file:text-white file:bg-secondary-500 hover:file:bg-secondary-600 transition duration-150 ease-in-out" />
+                                  <div id="signature1Preview" class="mt-4 image-preview"></div>
+                                </div>
+                                <div>
+                                  <label class="block text-sm font-medium text-gray-700 mb-2">Cachets</label>
+                                  <input type="file" id="cachet1" accept="image/*"
+class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:font-semibold file:text-white file:bg-secondary-500 hover:file:bg-secondary-600 transition duration-150 ease-in-out" />
+                                  <div id="cachet1Preview" class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Responsable 2 -->
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                          <button type="button"
+                            class="accordion-header w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 font-medium flex justify-between items-center smooth-transition"
+                            data-accordion="2">
+                            <span class="flex items-center">
+                              <i class="ri-user-line mr-2 text-primary-500"></i>
+                              Responsable 2
+                            </span>
+                            <i class="ri-arrow-down-s-line text-xl accordion-icon smooth-transition"></i>
+                          </button>
+                          <div class="accordion-panel hidden" data-panel="2">
+                            <div class="p-4 space-y-4">
+                              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                  <label class="block text-sm font-medium text-gray-700 mb-2">Prénoms</label>
+                                  <input type="text" id="prenomsResponsable2"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 smooth-transition"
+                                    placeholder="Ex: Sandra">
+                                </div>
+                                <div>
+                                  <label class="block text-sm font-medium text-gray-700 mb-2">Nom</label>
+                                  <input type="text" id="nomResponsable2"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 smooth-transition"
+                                    placeholder="Ex: Dossou">
+                                </div>
+                              </div>
+                              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                  <label class="block text-sm font-medium text-gray-700 mb-2">Titre/Fonction</label>
+                                  <select id="fonctionResponsable2"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 smooth-transition">
+                                    <option value="">Sélectionner</option>
+                                    <option value="Directeur">Directeur</option>
+                                    <option value="Secretaire">Secrétaire</option>
+                                    <option value="Comptable">Comptable</option>
+                                  </select>
+                                </div>
+                                <div>
+                                  <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                  <input type="email" id="emailResponsable2"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 smooth-transition"
+                                    placeholder="secretaire@ecole.com">
+                                </div>
+                              </div>
+                              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                  <label class="block text-sm font-medium text-gray-700 mb-2">Signature</label>
+                                  <input type="file" id="signature2" accept="image/*"
+class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:font-semibold file:text-white file:bg-secondary-500 hover:file:bg-secondary-600 transition duration-150 ease-in-out" />
+                                  <div id="signature2Preview" class="mt-4 image-preview"></div>
+                                </div>
+                                <div>
+                                  <label class="block text-sm font-medium text-gray-700 mb-2">Cachets</label>
+                                  <input type="file" id="cachet2" accept="image/*"
+class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:font-semibold file:text-white file:bg-secondary-500 hover:file:bg-secondary-600 transition duration-150 ease-in-out" />
+                                  <div id="cachet2Preview" class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Responsable 3 -->
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                          <button type="button"
+                            class="accordion-header w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 font-medium flex justify-between items-center smooth-transition"
+                            data-accordion="3">
+                            <span class="flex items-center">
+                              <i class="ri-user-line mr-2 text-primary-500"></i>
+                              Responsable 3
+                            </span>
+                            <i class="ri-arrow-down-s-line text-xl accordion-icon smooth-transition"></i>
+                          </button>
+                          <div class="accordion-panel hidden" data-panel="3">
+                            <div class="p-4 space-y-4">
+                              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                  <label class="block text-sm font-medium text-gray-700 mb-2">Prénoms</label>
+                                  <input type="text" id="prenomsResponsable3"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 smooth-transition"
+                                    placeholder="Ex: Florent">
+                                </div>
+                                <div>
+                                  <label class="block text-sm font-medium text-gray-700 mb-2">Nom</label>
+                                  <input type="text" id="nomResponsable3"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 smooth-transition"
+                                    placeholder="Ex: Hounkpatin">
+                                </div>
+                              </div>
+                              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                  <label class="block text-sm font-medium text-gray-700 mb-2">Titre/Fonction</label>
+                                  <select id="fonctionResponsable3"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 smooth-transition">
+                                    <option value="">Sélectionner</option>
+                                    <option value="Directeur">Directeur</option>
+                                    <option value="Secretaire">Secrétaire</option>
+                                    <option value="Comptable">Comptable</option>
+                                  </select>
+                                </div>
+                                <div>
+                                  <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                  <input type="email" id="emailResponsable3"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 smooth-transition"
+                                    placeholder="comptable@ecole.com">
+                                </div>
+                              </div>
+                              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                  <label class="block text-sm font-medium text-gray-700 mb-2">Signature</label>
+                                  <input type="file" id="signature3" accept="image/*"
+                                    class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:font-semibold file:text-white file:bg-secondary-500 hover:file:bg-secondary-600 transition duration-150 ease-in-out" />
+                                  <div id="signature3Preview" class="mt-4 image-preview"></div>
+                                </div>
+                                <div>
+                                  <label class="block text-sm font-medium text-gray-700 mb-2">Cachets</label>
+                                  <input type="file" id="cachet3" accept="image/*"
+class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:font-semibold file:text-white file:bg-secondary-500 hover:file:bg-secondary-600 transition duration-150 ease-in-out" />
+                                  <div id="cachet3Preview" class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Ajouter le logo de l'école -->
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                      <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="ri-image-line mr-2 text-primary-500"></i>
+                        Logo de l'établissement
+                      </h3>
+                      <div class="flex items-center space-x-4">
+                        <input type="file" id="logoEcole" accept="image/*"
+                          class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:font-semibold file:text-white file:bg-secondary-500 hover:file:bg-secondary-600 transition duration-150 ease-in-out" />
+                        <div id="logoPreview" class="w-24 h-24 rounded-lg overflow-hidden shadow-md"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Boutons de navigation -->
+                  <div class="flex justify-between mt-8">
+                    <button type="button"
+                      class="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 smooth-transition"
+                      disabled>
+
+                    </button>
+                    <div class="flex space-x-3">
+                      <button type="button" id="save-general"
+                        class="px-6 py-2 bg-success-600 text-white rounded-lg font-semibold hover:bg-success-700 transition shadow hover:shadow-md transition-transform hover:scale-[1.02]">
+                        <i class="ri-save-line mr-2"></i>Enregistrer
+                      </button>
+                      <button type="button" onclick="nextTab()"
+                        class="px-6 py-2 bg-primary-500 text-white rounded-lg font-semibold hover:bg-primary-600 transition shadow hover:shadow-md transition-transform hover:scale-[1.02]">
+                        Suivant<i class="ri-arrow-right-line ml-2"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Onglet 2: Classes & Frais -->
+                <div class="tab-content hidden" id="tab-2">
+                  <div class="space-y-6 animate-fade-in">
+                    <div class="flex items-center justify-between mb-6">
+                      <h3 class="text-xl font-semibold text-gray-800 flex items-center">
+                        <i class="ri-graduation-cap-line mr-3 text-primary-500"></i>
+                        Gestion des classes et frais
+                      </h3>
+                      <button type="button" onclick="ouvrirModalClasse()"
+                        class="px-6 py-2 bg-success-600 text-white rounded-lg font-semibold hover:bg-success-700 transition shadow hover:shadow-md transition-transform hover:scale-[1.02]">
+                        <i class="ri-add-line mr-2"></i>
+                        Ajouter une classe
+                      </button>
+                    </div>
+
+                    <div
+                      class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-4 mb-6 border-l-4 border-green-400">
+                      <p class="text-sm text-green-800 flex items-center">
+                        <i class="ri-information-line mr-2"></i>
+                        Configurez les classes disponibles et leurs frais de scolarité répartis en tranches.
+                      </p>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                      <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                          <thead class="bg-gradient-to-r from-gray-50 to-gray-100">
+                            <tr>
+                              <th class="border-b border-gray-200 px-6 py-4 text-left font-semibold text-gray-700">
+                                Classe</th>
+                              <th class="border-b border-gray-200 px-4 py-4 text-left font-semibold text-gray-700">1ère
+                                Tranche</th>
+                              <th class="border-b border-gray-200 px-4 py-4 text-left font-semibold text-gray-700">2ème
+                                Tranche</th>
+                              <th class="border-b border-gray-200 px-4 py-4 text-left font-semibold text-gray-700">3ème
+                                Tranche</th>
+                              <th class="border-b border-gray-200 px-4 py-4 text-left font-semibold text-gray-700">Total
+                              </th>
+                              <th class="border-b border-gray-200 px-4 py-4 text-center font-semibold text-gray-700">
+                                Actions
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody id="classeTableBody" class="divide-y divide-gray-200">
+                            <!-- Lignes dynamiques -->
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <!-- Empty state pour les classes -->
+                      <div id="emptyState" class="text-center py-16 text-gray-500 hidden">
+                        <div class="animate-bounce-in">
+                          <i class="ri-graduation-cap-line text-6xl mb-4 opacity-50"></i>
+                          <p class="text-xl mb-2 font-medium">Aucune classe configurée</p>
+                          <p class="text-sm mb-4">Commencez par ajouter votre première classe</p>
+                          <button onclick="ouvrirModalClasse()"
+                            class="px-6 py-3 bg-primary-500 text-white rounded-lg hover:bg-primary-500-dark smooth-transition">
+                            <i class="ri-add-line mr-2"></i>Ajouter une classe
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Boutons de navigation -->
+                  <div class="flex justify-between mt-8">
+                    <button type="button" onclick="prevTab()"
+                      class="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 smooth-transition">
+                      <i class="ri-arrow-left-line mr-2"></i>Précédent
+                    </button>
+                    <div class="flex space-x-3">
+
+                      <button type="button" onclick="nextTab()"
+                        class="px-6 py-2 bg-primary-500 text-white rounded-lg font-semibold hover:bg-primary-600 transition shadow hover:shadow-md transition-transform hover:scale-[1.02]">
+                        Suivant<i class="ri-arrow-right-line ml-2"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Onglet 3: Années Scolaires -->
+                <div class="tab-content hidden" id="tab-3">
+                  <div class="space-y-6 animate-fade-in">
+                    <div class="flex items-center justify-between mb-6">
+                      <h3 class="text-xl font-semibold text-gray-800 flex items-center">
+                        <i class="ri-calendar-line mr-3 text-primary-500"></i>
+                        Gestion des années scolaires
+                      </h3>
+                      <button type="button" onclick="ouvrirModalAnnee()" id="add-year-btn"
+                        class="px-6 py-2 bg-success-600 text-white rounded-lg font-semibold hover:bg-success-700 transition shadow hover:shadow-md transition-transform hover:scale-[1.02]">
+                        <i class="ri-add-line mr-2"></i>
+                        Ajouter une année
+                      </button>
+                    </div>
+
+                    <div
+                      class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-4 mb-6 border-l-4 border-green-400">
+                      <p class="text-sm text-green-800 flex items-center">
+                        <i class="ri-information-line mr-2"></i>
+                        Ajoutez et gérez les années scolaires disponibles pour votre établissement.
+                      </p>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                      <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                          <thead class="bg-gradient-to-r from-gray-50 to-gray-100">
+                            <tr>
+                              <th class="border-b border-gray-200 px-6 py-4 text-left font-semibold text-gray-700">Année
+                                scolaire</th>
+                              <th class="border-b border-gray-200 px-4 py-4 text-left font-semibold text-gray-700">
+                                Active</th>
+
+                              <th class="border-b border-gray-200 px-4 py-4 text-center font-semibold text-gray-700">
+                                Actions
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody id="schoolYearTableBody" class="divide-y divide-gray-200">
+                            <!-- Lignes dynamiques -->
+                          </tbody>
+                        </table>
+                      </div>
+                      <!-- Empty state pour les années scolaires -->
+                      <div id="emptyStateAnnee" class="text-center py-16 text-gray-500 hidden">
+                        <div class="animate-bounce-in">
+                          <i class="ri-calendar-line text-6xl mb-4 opacity-50"></i>
+                          <p class="text-xl mb-2 font-medium">Aucune année scolaire configurée</p>
+                          <p class="text-sm mb-4">Commencez par ajouter votre première année scolaire</p>
+                          <button type="button" onclick="ouvrirModalAnnee()"
+                            class="px-6 py-2 bg-success-600 text-white rounded-lg font-semibold hover:bg-success-700 transition shadow hover:shadow-md transition-transform hover:scale-[1.02]">
+                            <i class="ri-add-line mr-2"></i>Ajouter une année
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Boutons de navigation -->
+                  <div class="flex justify-between mt-8">
+                    <button type="button" onclick="prevTab()"
+                      class="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 smooth-transition">
+                      <i class="ri-arrow-left-line mr-2"></i>Précédent
+                    </button>
+
+                  </div>
+                </div>
+
+
+                <!-- Fin des onglets -->
+              </form>
+            </div>
+          </div>
+
+          <!-- Modal pour ajouter une classeClasse -->
+          <div id="modalClasse"
+            class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+            <div class="bg-white rounded-xl p-8 shadow-xl w-full max-w-md">
+              <h2 class="text-xl font-bold mb-4">Ajouter une classe</h2>
+              <!-- Formulaire modal classe -->
+              <div class="space-y-4">
+                <div class="group">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Nom de la classe <span
+                      class="text-red-500">*</span></label>
+                  <input type="text" id="nomClasse" required
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent smooth-transition"
+                    placeholder="Ex: CM1, CM2,...">
+                </div>
+
+                <div class="group">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">1ère Tranche</label>
+                  <input type="number" id="tranche1"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent smooth-transition"
+                    placeholder="Montant en FCFA">
+                </div>
+                <div class="group">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">2ème Tranche</label>
+                  <input type="number" id="tranche2"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent smooth-transition"
+                    placeholder="Montant en FCFA">
+                </div>
+
+                <div class="grid grid-cols-1 gap-4">
+                  <div class="group">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">3ème Tranche</label>
+                    <input type="number" id="tranche3"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent smooth-transition"
+                      placeholder="Montant en FCFA">
+                  </div>
+                </div>
+                <div class="flex justify-end mt-6">
+                  <button type="button" onclick="fermerModalClasse()"
+                    class="px-4 py-2 bg-gray-200 rounded-lg mr-2">Annuler</button>
+                  <button type="button" id="btn-save-classe" data-label="Enregistrer"
+                    class="px-4 py-2 bg-success-600 text-white rounded-lg">Enregistrer</button>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal pour ajouter une année scolaire -->
+          <div id="modalAnnee"
+            class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+            <div class="bg-white rounded-xl p-8 shadow-xl w-full max-w-md">
+              <h2 class="text-xl font-bold mb-4">Ajouter une année scolaire</h2>
+              <!-- Formulaire modal année -->
+              <div class="space-y-4">
+                <div class="group">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Année scolaire <span
+                      class="text-red-500">*</span></label>
+                  <input type="text" id="anneeScolaire" required
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent smooth-transition"
+                    placeholder="Ex: 2023/2024">
+                </div>
+                <div class="group">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Activer cette année</label>
+                  <select id="activerAnnee"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent smooth-transition">
+                    <option value="oui">Oui</option>
+                    <option value="non">Non</option>
+                  </select>
+                </div>
+              </div>
+              <div class="flex justify-end mt-6">
+                <button type="button" onclick="fermerModalAnnee()"
+                  class="px-4 py-2 bg-gray-200 rounded-lg mr-2">Annuler</button>
+                <button type="button" id="btn-save-annee" data-label="Enregistrer"
+                  class="px-4 py-2 bg-success-600 text-white rounded-lg">Enregistrer</button>
+              </div>
+            </div>
+          </div>
+          <!-- End of main content -->
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/Sidebar&hearder.js"></script>
+  <script src="../js/configuration.js"></script>
+</body>
+
+</html>

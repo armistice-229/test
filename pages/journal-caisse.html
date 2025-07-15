@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AcademyFlow - Système de gestion scolaire efficace pour votre établissement">
+    <title>AcademyFlow - Gérez efficacement votre école</title>
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" as="style">
+
+    <!-- Favicon -->
+    <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/main.css">
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+
+    <script>
+        // Optimized Tailwind config
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eef2ff',
+                            500: '#4f46e5',
+                            600: '#4338ca',
+                            700: '#3730a3'
+                        },
+                        secondary: {
+                            50: '#f5f3ff',
+                            500: '#8b5cf6',
+                            600: '#7c3aed'
+                        }
+                    },
+                    animation: {
+                        'slide-in': 'slideIn 0.2s ease-out',
+                        'scale-in': 'scaleIn 0.15s ease-out'
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '4px',
+                        DEFAULT: '8px',
+                        'md': '12px',
+                        'lg': '16px',
+                        'xl': '20px',
+                        '2xl': '24px',
+                        '3xl': '32px',
+                        'full': '9999px',
+                        'button': '8px'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 min-h-screen font-sans">
+    <!-- Mobile sidebar overlay -->
+    <div id="sidebar-overlay" class="sidebar-overlay" aria-hidden="true"></div>
+
+    <div class="flex h-screen overflow-hidden">
+        <!-- SIDEBAR -->
+        <aside id="sidebar"
+            class="sidebar w-64 bg-white border-r border-gray-200 flex flex-col overflow-hidden md:translate-x-0 fixed md:relative z-50 h-full">
+            <!-- Header -->
+            <div class="flex items-center justify-between p-4 border-b border-gray-200 min-h-[64px]">
+                <a href="pages/main.html"
+                    class="flex items-center space-x-3 text-primary-500 hover:text-secondary-500 smooth-transition focus-ring rounded-md">
+                    <svg class="w-8 h-8 text-secondary-500" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                            d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM12 13L3.74 8.5 12 4l8.26 4.5L12 13zm-1 3h2v2h-2v-2z" />
+                    </svg>
+                    <span class="text-xl font-bold tracking-tight">
+                        <span class="text-gray-800">Academy</span><span class="text-secondary-500">Flow</span>
+                    </span>
+                </a>
+
+                <!-- Mobile close button -->
+                <button id="close-sidebar" class="md:hidden p-2 rounded-md hover:bg-gray-100 focus-ring"
+                    aria-label="Fermer le menu">
+                    <i class="ri-close-line text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex-1 p-4 overflow-y-auto custom-scrollbar" role="navigation"
+                aria-label="Navigation principale">
+                <!-- Menu principal -->
+                <section class="mb-6">
+                    <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Menu principal</h2>
+                    <ul class="space-y-1" role="list">
+                        <li>
+                            <a href="../pages/main.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-dashboard-line mr-3 text-lg" aria-hidden="true"></i>
+                                Tableau de bord
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Élèves -->
+                <section class="mb-6">
+                    <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Élèves</h2>
+                    <ul class="space-y-1" role="list">
+                        <li>
+                            <a href="../pages/inscription.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-user-add-line mr-3 text-lg" aria-hidden="true"></i>
+                                Nouvelle Inscription
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/gestion_eleve.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-file-list-line mr-3 text-lg" aria-hidden="true"></i>
+                                Liste des élèves
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/eleve.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-user-line mr-3 text-lg" aria-hidden="true"></i>
+                                Espaces Élèves
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/transferts.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-exchange-line mr-3 text-lg" aria-hidden="true"></i>
+                                Transferts
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Caisse -->
+                <section class="mb-6">
+                    <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Caisse</h2>
+                    <ul class="space-y-1" role="list">
+                        <li>
+                            <a href="../pages/caisse-dashboard.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-dashboard-line mr-3 text-lg" aria-hidden="true"></i>
+                                Tableau de bord
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/caisse.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-money-dollar-circle-line mr-3 text-lg" aria-hidden="true"></i>
+                                Encaissements
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/decaissements.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-exchange-dollar-line mr-3 text-lg" aria-hidden="true"></i>
+                                Décaissements
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/journal-caisse.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-book-open-line mr-3 text-lg" aria-hidden="true"></i>
+                                Journal de caisse
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/rapports-financiers.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-file-chart-line mr-3 text-lg" aria-hidden="true"></i>
+                                Rapports financiers
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Statistiques -->
+                <section class="mb-6">
+                    <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Statistiques</h2>
+                    <ul class="space-y-1" role="list">
+                        <li>
+                            <a href="../pages/documents.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-file-copy-line mr-3 text-lg" aria-hidden="true"></i>
+                                Documents
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../pages/archives.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-archive-line mr-3 text-lg" aria-hidden="true"></i>
+                                Archives
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Paramètres -->
+                <section>
+                    <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Paramètres</h2>
+                    <ul class="space-y-1" role="list">
+                        <li>
+                            <a href="../pages/configuration.html"
+                                class="nav-link flex items-center px-3 py-2 text-sm rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 smooth-transition focus-ring">
+                                <i class="ri-settings-2-line mr-3 text-lg" aria-hidden="true"></i>
+                                Configuration
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+            </nav>
+
+            <!-- User Profile -->
+            <div class="p-4 border-t border-gray-200 bg-gray-50">
+                <div class="flex items-center space-x-3">
+                    <div
+                        class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 text-white flex items-center justify-center font-semibold">
+                        <span id="user-initials">M</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p id="user-name" class="text-sm font-medium text-gray-800 truncate">Martine Akuavi SOSOUKPE</p>
+                        <p class="text-xs text-gray-500">Administrateur</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="bg-white border-b border-gray-200 z-10">
+                <div class="flex items-center justify-between px-4 md:px-6 py-3">
+                    <!-- Mobile menu button -->
+                    <div class="flex items-center space-x-4">
+                        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md hover:bg-gray-100 focus-ring"
+                            aria-label="Ouvrir le menu">
+                            <i class="ri-menu-line text-xl"></i>
+                        </button>
+
+                        <!-- Breadcrumb -->
+                        <nav class="flex items-center space-x-2 text-sm" aria-label="Fil d'Ariane">
+                            <a href="pages/main.html"
+                                class="text-gray-600 hover:text-gray-900 focus-ring rounded px-1">Accueil</a>
+                            <span class="text-gray-400">/</span>
+                            <!-- le titre des pages se met à jour automatiquement-->
+                            <span class="text-gray-800 font-medium" id="breadcrumb-title">Journal de Caisse</span>
+                        </nav>
+                    </div>
+
+                    <!-- Date and Time -->
+                    <div class="hidden sm:flex items-center space-x-6">
+                        <div class="flex items-center text-gray-600">
+                            <i class="ri-calendar-line mr-2" aria-hidden="true"></i>
+                            <time id="current-date" class="text-sm">9 juillet 2025</time>
+                        </div>
+                        <div class="flex items-center text-gray-600">
+                            <i class="ri-time-line mr-2" aria-hidden="true"></i>
+                            <time id="current-time" class="text-sm">14:30</time>
+                        </div>
+                    </div>
+
+                    <!-- Profile Dropdown -->
+                    <div class="relative">
+                        <button id="profile-btn"
+                            class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 text-white flex items-center justify-center hover:shadow-lg smooth-transition focus-ring transform hover:scale-105"
+                            aria-expanded="false" aria-haspopup="true">
+                            <i class="ri-user-line text-lg" aria-hidden="true"></i>
+                        </button>
+
+                        <div id="profile-dropdown"
+                            class="hidden absolute right-0 mt-2 w-72 bg-white border border-gray-200 rounded-xl shadow-xl z-50 animate-scale-in"
+                            role="menu" aria-orientation="vertical">
+                            <div
+                                class="px-4 py-3 border-b border-gray-100 bg-gradient-to-r from-primary-50 to-secondary-50 rounded-t-xl">
+                                <p class="text-xs text-gray-500 mb-1">École connectée</p>
+                                <p id="dropdown-school-name" class="text-sm font-semibold text-gray-800 truncate">Nom de
+                                    l'école</p>
+                            </div>
+
+                            <div class="py-2">
+                                <a href="../pages/configuration.html"
+                                    class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 smooth-transition"
+                                    role="menuitem">
+                                    <i class="ri-settings-2-line mr-3 text-lg" aria-hidden="true"></i>
+                                    Paramètres
+                                </a>
+                                <hr class="my-2 border-gray-100">
+                                <button id="logout-btn"
+                                    class="w-full flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 smooth-transition"
+                                    role="menuitem">
+                                    <i class="ri-logout-box-line mr-3 text-lg" aria-hidden="true"></i>
+                                    Déconnexion
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto bg-gray-50 p-4 md:p-6 custom-scrollbar">
+                <!-- Loading state -->
+                <div id="loading-state" class="hidden">
+                    <div class="animate-pulse space-y-4">
+                        <div class="h-8 bg-gray-200 rounded-md w-1/4"></div>
+                        <div class="h-4 bg-gray-200 rounded-md w-1/2"></div>
+                        <div class="h-32 bg-gray-200 rounded-lg"></div>
+                    </div>
+                </div>
+
+                <!-- Content will be loaded here -->
+                <div id="main-content">
+                    <div class="">
+                <!-- Page Header -->
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-blue-100 rounded-md flex items-center justify-center">
+                            <i class="ri-file-text-line text-blue-600"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-semibold text-gray-900">Journal de caisse</h1>
+                            <p class="text-sm text-gray-500">Période : 01 juillet - 12 juillet 2025</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button
+                            class="flex items-center px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-button hover:bg-gray-50 whitespace-nowrap !rounded-button">
+                            <i class="ri-download-line w-4 h-4 flex items-center justify-center mr-2"></i>
+                            Exporter
+                        </button>
+                        <button
+                            class="flex items-center px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-button hover:bg-gray-50 whitespace-nowrap !rounded-button">
+                            <i class="ri-filter-line w-4 h-4 flex items-center justify-center mr-2"></i>
+                            Filtres
+                        </button>
+                    </div>
+                </div>
+                <!-- Summary Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="flex items-center">
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-gray-600">Solde actuel</p>
+                                <p class="text-2xl font-bold text-gray-900">4 892 350 FCFA</p>
+                                <p class="text-xs text-green-600 mt-1">+8% vs mois dernier</p>
+                            </div>
+                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                <i class="ri-wallet-line text-green-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="flex items-center">
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-gray-600">Total encaissements</p>
+                                <p class="text-2xl font-bold text-gray-900">7 739 850 FCFA</p>
+                                <p class="text-xs text-blue-600 mt-1">+15% ce mois</p>
+                            </div>
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <i class="ri-arrow-up-line text-blue-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="flex items-center">
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-gray-600">Total décaissements</p>
+                                <p class="text-2xl font-bold text-gray-900">2 847 500 FCFA</p>
+                                <p class="text-xs text-red-600 mt-1">+12% ce mois</p>
+                            </div>
+                            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                                <i class="ri-arrow-down-line text-red-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="flex items-center">
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-gray-600">Transactions</p>
+                                <p class="text-2xl font-bold text-gray-900">284</p>
+                                <p class="text-xs text-gray-500 mt-1">Total ce mois</p>
+                            </div>
+                            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                                <i class="ri-file-list-line text-purple-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Chart Section -->
+                <div class="bg-white p-6 rounded-lg shadow-sm mb-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-lg font-medium text-gray-900">Évolution du solde</h3>
+                        <div class="flex items-center space-x-1 bg-gray-100 p-1 rounded-md">
+                            <button class="px-3 py-1 text-sm font-medium text-white bg-primary rounded-sm">Jour</button>
+                            <button
+                                class="px-3 py-1 text-sm font-medium text-gray-600 hover:text-gray-900">Semaine</button>
+                            <button
+                                class="px-3 py-1 text-sm font-medium text-gray-600 hover:text-gray-900">Mois</button>
+                            <button
+                                class="px-3 py-1 text-sm font-medium text-gray-600 hover:text-gray-900">Année</button>
+                        </div>
+                    </div>
+                    <div id="balanceChart" style="width: 100%; height: 300px;"></div>
+                </div>
+                <!-- Filters and Search -->
+                <div class="bg-white p-6 rounded-lg shadow-sm mb-6">
+                    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
+                        <div class="flex-1 max-w-md">
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="ri-search-line text-gray-400"></i>
+                                </div>
+                                <input type="text" placeholder="Rechercher une transaction..."
+                                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary text-sm">
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="flex items-center space-x-1 bg-gray-100 p-1 rounded-md">
+                                <button
+                                    class="px-3 py-1 text-sm font-medium text-white bg-primary rounded-sm">Toutes</button>
+                                <button
+                                    class="px-3 py-1 text-sm font-medium text-gray-600 hover:text-gray-900">Encaissements</button>
+                                <button
+                                    class="px-3 py-1 text-sm font-medium text-gray-600 hover:text-gray-900">Décaissements</button>
+                            </div>
+                            <button
+                                class="flex items-center px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-button hover:bg-gray-50 whitespace-nowrap !rounded-button">
+                                <i class="ri-calendar-line w-4 h-4 flex items-center justify-center mr-2"></i>
+                                Période
+                                <i class="ri-arrow-down-s-line w-4 h-4 flex items-center justify-center ml-1"></i>
+                            </button>
+                            <button
+                                class="flex items-center px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-button hover:bg-gray-50 whitespace-nowrap !rounded-button">
+                                <i class="ri-filter-line w-4 h-4 flex items-center justify-center mr-2"></i>
+                                Catégorie
+                                <i class="ri-arrow-down-s-line w-4 h-4 flex items-center justify-center ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Transactions Table -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-medium text-gray-900">Historique des mouvements</h3>
+                            <span class="text-sm text-gray-500">Affichage de 1 à 10 sur 284 transactions</span>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Date</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Type</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Description</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Montant entrant</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Montant sortant</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Solde cumulé</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">12/07/2025 14:30</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            Encaissement
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Frais de scolarité - Classe
+                                                de 6ème A</div>
+                                            <div class="text-sm text-gray-500">Élève : Koffi Amenyo AGBEKO</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-600">+185 000
+                                        FCFA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">4 892 350
+                                        FCFA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-indigo-600 hover:text-indigo-900">
+                                            <i class="ri-eye-line w-4 h-4 flex items-center justify-center"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">12/07/2025 10:15</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                            Décaissement
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Achat fournitures scolaires
+                                            </div>
+                                            <div class="text-sm text-gray-500">Cahiers, stylos et matériel pédagogique
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-red-600">-85 000
+                                        FCFA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">4 707 350
+                                        FCFA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-indigo-600 hover:text-indigo-900">
+                                            <i class="ri-eye-line w-4 h-4 flex items-center justify-center"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">11/07/2025 16:45</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            Encaissement
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Frais de cantine - Mois de
+                                                juillet</div>
+                                            <div class="text-sm text-gray-500">Élève : Adjoa Emefa TOGO</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-600">+45 000
+                                        FCFA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">4 792 350
+                                        FCFA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-indigo-600 hover:text-indigo-900">
+                                            <i class="ri-eye-line w-4 h-4 flex items-center justify-center"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">11/07/2025 09:20</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                            Décaissement
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Maintenance équipements</div>
+                                            <div class="text-sm text-gray-500">Réparation projecteur salle informatique
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-red-600">-125 000
+                                        FCFA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">4 747 350
+                                        FCFA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-indigo-600 hover:text-indigo-900">
+                                            <i class="ri-eye-line w-4 h-4 flex items-center justify-center"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">10/07/2025 15:30</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            Encaissement
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Frais de scolarité - Classe
+                                                de 3ème B</div>
+                                            <div class="text-sm text-gray-500">Élève : Yao Kouassi ASANTE</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-600">+220 000
+                                        FCFA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">4 872 350
+                                        FCFA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-indigo-600 hover:text-indigo-900">
+                                            <i class="ri-eye-line w-4 h-4 flex items-center justify-center"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">10/07/2025 08:00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                            Décaissement
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Salaire personnel enseignant
+                                            </div>
+                                            <div class="text-sm text-gray-500">Paiement mensuel juillet 2025</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-red-600">-1 250 000
+                                        FCFA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">4 652 350
+                                        FCFA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-indigo-600 hover:text-indigo-900">
+                                            <i class="ri-eye-line w-4 h-4 flex items-center justify-center"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">09/07/2025 14:15</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            Encaissement
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Frais d'inscription -
+                                                Nouvelle année</div>
+                                            <div class="text-sm text-gray-500">Élève : Akosua Adwoa MENSAH</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-600">+75 000
+                                        FCFA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">5 902 350
+                                        FCFA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-indigo-600 hover:text-indigo-900">
+                                            <i class="ri-eye-line w-4 h-4 flex items-center justify-center"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">09/07/2025 11:30</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                            Décaissement
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Facture électricité</div>
+                                            <div class="text-sm text-gray-500">Consommation juin 2025</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-red-600">-65 500
+                                        FCFA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">5 827 350
+                                        FCFA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-indigo-600 hover:text-indigo-900">
+                                            <i class="ri-eye-line w-4 h-4 flex items-center justify-center"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">08/07/2025 16:00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            Encaissement
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Frais de transport -
+                                                Trimestre</div>
+                                            <div class="text-sm text-gray-500">Élève : Kwame Nkrumah OSEI</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-600">+35 000
+                                        FCFA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">5 892 850
+                                        FCFA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-indigo-600 hover:text-indigo-900">
+                                            <i class="ri-eye-line w-4 h-4 flex items-center justify-center"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">08/07/2025 09:45</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                            Décaissement
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Transport scolaire</div>
+                                            <div class="text-sm text-gray-500">Carburant et maintenance bus</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-red-600">-95 000
+                                        FCFA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">5 857 850
+                                        FCFA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-indigo-600 hover:text-indigo-900">
+                                            <i class="ri-eye-line w-4 h-4 flex items-center justify-center"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Pagination -->
+                    <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1 flex justify-between sm:hidden">
+                                <button
+                                    class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">Précédent</button>
+                                <button
+                                    class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">Suivant</button>
+                            </div>
+                            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-700">Affichage de <span class="font-medium">1</span> à
+                                        <span class="font-medium">10</span> sur <span class="font-medium">284</span>
+                                        transactions</p>
+                                </div>
+                                <div>
+                                    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+                                        <button
+                                            class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                            <i
+                                                class="ri-arrow-left-s-line w-5 h-5 flex items-center justify-center"></i>
+                                        </button>
+                                        <button
+                                            class="bg-primary border-primary text-white relative inline-flex items-center px-4 py-2 border text-sm font-medium">1</button>
+                                        <button
+                                            class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">2</button>
+                                        <button
+                                            class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">3</button>
+                                        <span
+                                            class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>
+                                        <button
+                                            class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">29</button>
+                                        <button
+                                            class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                            <i
+                                                class="ri-arrow-right-s-line w-5 h-5 flex items-center justify-center"></i>
+                                        </button>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                    <!-- End of main content -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/Sidebar&hearder.js"></script>
+    <script id="chartInit">
+        document.addEventListener('DOMContentLoaded', function () {
+            const chartDom = document.getElementById('balanceChart');
+            const myChart = echarts.init(chartDom);
+            const option = {
+                animation: false,
+                grid: {
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['01/07', '02/07', '03/07', '04/07', '05/07', '06/07', '07/07', '08/07', '09/07', '10/07', '11/07', '12/07'],
+                    axisLine: {
+                        lineStyle: {
+                            color: '#e5e7eb'
+                        }
+                    },
+                    axisLabel: {
+                        color: '#6b7280'
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLine: {
+                        show: false
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    axisLabel: {
+                        color: '#6b7280',
+                        formatter: function (value) {
+                            return (value / 1000000).toFixed(1) + 'M';
+                        }
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: '#f3f4f6'
+                        }
+                    }
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                    borderColor: '#e5e7eb',
+                    textStyle: {
+                        color: '#1f2937'
+                    },
+                    formatter: function (params) {
+                        return params[0].name + '<br/>' +
+                            'Solde: ' + (params[0].value / 1000).toLocaleString() + ' FCFA';
+                    }
+                },
+                series: [{
+                    name: 'Solde',
+                    type: 'line',
+                    smooth: true,
+                    data: [5200000, 5150000, 5320000, 5180000, 5450000, 5380000, 5520000, 5857850, 5892850, 4652350, 4747350, 4892350],
+                    lineStyle: {
+                        color: 'rgba(87, 181, 231, 1)',
+                        width: 3
+                    },
+                    itemStyle: {
+                        color: 'rgba(87, 181, 231, 1)'
+                    },
+                    areaStyle: {
+                        color: {
+                            type: 'linear',
+                            x: 0,
+                            y: 0,
+                            x2: 0,
+                            y2: 1,
+                            colorStops: [{
+                                offset: 0,
+                                color: 'rgba(87, 181, 231, 0.1)'
+                            }, {
+                                offset: 1,
+                                color: 'rgba(87, 181, 231, 0.01)'
+                            }]
+                        }
+                    },
+                    symbol: 'none'
+                }]
+            };
+            myChart.setOption(option);
+        });
+    </script>
+    <script id="filterToggle">
+        document.addEventListener('DOMContentLoaded', function () {
+            const filterGroups = document.querySelectorAll('.bg-gray-100');
+            filterGroups.forEach(group => {
+                const buttons = group.querySelectorAll('button');
+                buttons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        buttons.forEach(btn => {
+                            btn.classList.remove('bg-primary', 'text-white');
+                            btn.classList.add('text-gray-600');
+                        });
+                        this.classList.add('bg-primary', 'text-white');
+                        this.classList.remove('text-gray-600');
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
